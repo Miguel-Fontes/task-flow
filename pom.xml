@@ -5,6 +5,9 @@
     <groupId>br.com.miguelfontes</groupId>
     <artifactId>task-flow</artifactId>
     <version>1.0-SNAPSHOT</version>
+    <modules>
+        <module>task-flow-core</module>
+    </modules>
     <packaging>pom</packaging>
 
     <name>Task Flow</name>
