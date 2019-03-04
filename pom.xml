@@ -5,11 +5,11 @@
     <groupId>br.com.miguelfontes</groupId>
     <artifactId>task-flow</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <packaging>jar</packaging>
+    <packaging>pom</packaging>
 
-    <name>task-flow</name>
+    <name>Task Flow</name>
     <url>https://github.com/Miguel-Fontes/task-flow</url>
-    <description>My Awesome Project!</description>
+    <description>Task Flow is a opinionated task manager focused on simplicity!</description>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
