@@ -1,6 +1,6 @@
-package br.com.miguelfontes.taskflow.ports.cli.task;
+package br.com.miguelfontes.taskflow.ports.tasks;
 
-import br.com.miguelfontes.taskflow.core.Task;
+import br.com.miguelfontes.taskflow.core.tasks.Task;
 
 import java.time.LocalDateTime;
 import java.util.UUID;

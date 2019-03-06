@@ -1,4 +1,4 @@
-package br.com.miguelfontes.taskflow.core;
+package br.com.miguelfontes.taskflow.core.tasks;
 
 import java.time.LocalDateTime;
 

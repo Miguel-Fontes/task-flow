@@ -1,4 +1,4 @@
-package br.com.miguelfontes.taskflow.ports.cli.user;
+package br.com.miguelfontes.taskflow.ports.tasks;
 
 /**
  * Encapsulates the date involved on a user creation request
