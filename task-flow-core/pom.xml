@@ -11,9 +11,9 @@
 
     <artifactId>task-flow-core</artifactId>
 
-    <name>Task Flow</name>
+    <name>Task Flow Core</name>
     <url>https://github.com/Miguel-Fontes/task-flow</url>
-    <description>Task Flow is a opinionated task manager focused on simplicity!</description>
+    <description>Contains the core domain logic of the Task Flow project</description>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
