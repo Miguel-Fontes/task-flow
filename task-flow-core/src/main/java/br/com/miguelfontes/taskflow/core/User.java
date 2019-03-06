@@ -23,6 +23,10 @@ public class User {
         return new User(name, LocalDateTime.now(), LocalDateTime.now());
     }
 
+    public Task createTask(String title) {
+        return Task.newInstance(this, title);
+    }
+
     public String getName() {
         return name;
     }
