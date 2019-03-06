@@ -64,3 +64,5 @@ fabric.properties
 
 # Maven build path
 target
+
+**/.attach*

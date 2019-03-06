@@ -12,7 +12,8 @@ class TaskTest {
     @DisplayName("newInstance factory method")
     class newInstanceFactoryMethod {
         private final String title = "my task title";
-        private final User user = new User();
+        private final String userName = "a user name";
+        private final User user = User.newInstance(userName);
         private final Task task = Task.newInstance(user, title);
 
 
@@ -28,7 +29,10 @@ class TaskTest {
         @Test
         @DisplayName("should set a task creation date time")
         void shouldSetATaskCreationDatetime() {
-            assertNotNull(task.getCreatedAt());
+            assertAll(
+                    () -> assertNotNull(task.getCreatedAt()),
+                    () -> assertNotNull(task.getUpdatedAt())
+            );
         }
 
         @Test

@@ -10,18 +10,20 @@ import java.time.LocalDateTime;
 public class Task {
     private final String title;
     private final LocalDateTime createdAt;
+    private final LocalDateTime updatedAt;
     private final TaskStatus status;
     private final User author;
 
-    private Task(String title, LocalDateTime createdAt, TaskStatus status, User author) {
+    private Task(String title, LocalDateTime createdAt, LocalDateTime updatedAt, TaskStatus status, User author) {
         this.title = title;
         this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
         this.status = status;
         this.author = author;
     }
 
     public static Task newInstance(User author, String title) {
-        return new Task(title, LocalDateTime.now(), TaskStatus.INBOX, author);
+        return new Task(title, LocalDateTime.now(), LocalDateTime.now(), TaskStatus.INBOX, author);
     }
 
     public String getTitle() {
@@ -34,6 +36,10 @@ public class Task {
 
     public LocalDateTime getCreatedAt() {
         return createdAt;
+    }
+
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
     }
 
     public TaskStatus getStatus() {
