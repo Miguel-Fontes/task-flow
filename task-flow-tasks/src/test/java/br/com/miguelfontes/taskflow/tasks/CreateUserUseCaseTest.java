@@ -1,4 +1,4 @@
-package br.com.miguelfontes.tasks;
+package br.com.miguelfontes.taskflow.tasks;
 
 import br.com.miguelfontes.taskflow.ports.tasks.CreateUser;
 import br.com.miguelfontes.taskflow.ports.tasks.CreateUserRequest;
