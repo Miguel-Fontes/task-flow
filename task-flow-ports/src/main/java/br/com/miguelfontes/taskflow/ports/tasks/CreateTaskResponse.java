@@ -9,7 +9,7 @@ import java.io.Serializable;
  *
  * @author Miguel Fontes
  */
-public class CreateTaskResponse implements Serializable {
+public final class CreateTaskResponse implements Serializable {
     private final TaskDTO task;
 
     private CreateTaskResponse(TaskDTO task) {

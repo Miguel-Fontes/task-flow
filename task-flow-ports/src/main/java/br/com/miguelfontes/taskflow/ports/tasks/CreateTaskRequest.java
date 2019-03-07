@@ -9,7 +9,7 @@ import java.util.UUID;
  *
  * @author Miguel Fontes
  */
-public class CreateTaskRequest {
+public final class CreateTaskRequest {
     private final UUID userId;
     private final String title;
 

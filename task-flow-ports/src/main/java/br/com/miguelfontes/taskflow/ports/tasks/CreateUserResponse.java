@@ -7,7 +7,7 @@ import br.com.miguelfontes.taskflow.core.tasks.User;
  *
  * @author Miguel Fontes
  */
-public class CreateUserResponse {
+public final class CreateUserResponse {
     private final UserDTO user;
 
     private CreateUserResponse(UserDTO user) {

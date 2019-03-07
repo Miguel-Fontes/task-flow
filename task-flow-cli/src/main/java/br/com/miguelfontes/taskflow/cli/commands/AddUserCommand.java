@@ -10,7 +10,7 @@ import com.beust.jcommander.Parameters;
  * @author Miguel Fontes
  */
 @Parameters(commandNames = "add-user", commandDescription = "Adds a new user")
-public class AddUserCommand implements Command {
+public final class AddUserCommand implements Command {
 
     private AddUserCommand() {
     }

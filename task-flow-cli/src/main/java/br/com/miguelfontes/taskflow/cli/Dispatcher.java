@@ -10,7 +10,7 @@ import java.util.Optional;
  *
  * @author Miguel Fontes
  */
-class Dispatcher {
+final class Dispatcher {
 
     private final JCommander parser;
 

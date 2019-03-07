@@ -12,7 +12,7 @@ import static java.util.Arrays.asList;
  *
  * @author Miguel  Fontes
  */
-public class Application {
+public final class Application {
     public static void main(String[] args) {
         Dispatcher.newInstance(getCommands(), args).dispatch();
     }

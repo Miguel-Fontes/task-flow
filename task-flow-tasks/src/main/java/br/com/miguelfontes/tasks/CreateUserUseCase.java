@@ -11,12 +11,12 @@ import br.com.miguelfontes.taskflow.ports.tasks.CreateUserResponse;
  *
  * @author Miguel Fontes
  */
-public class CreateUserUseCase implements CreateUser {
+public final class CreateUserUseCase implements CreateUser {
 
     private CreateUserUseCase() {
     }
 
-    public static CreateUserUseCase instance() {
+    static CreateUserUseCase instance() {
         return new CreateUserUseCase();
     }
 

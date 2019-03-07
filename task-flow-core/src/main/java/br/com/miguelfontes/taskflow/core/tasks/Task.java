@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
  *
  * @author Miguel Fontes
  */
-public class Task {
+public final class Task {
     private final String title;
     private final LocalDateTime createdAt;
     private final LocalDateTime updatedAt;

@@ -5,7 +5,7 @@ package br.com.miguelfontes.taskflow.ports.tasks;
  *
  * @author Miguel Fontes
  */
-public class CreateUserRequest {
+public final class CreateUserRequest {
     private final String name;
 
     private CreateUserRequest(String name) {

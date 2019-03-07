@@ -10,7 +10,7 @@ import br.com.miguelfontes.taskflow.ports.tasks.CreateTaskResponse;
  *
  * @author  Miguel Fontes
  */
-public class CreateTaskUseCase implements CreateTask {
+public final class CreateTaskUseCase implements CreateTask {
     @Override
     public CreateTaskResponse execute(CreateTaskRequest request) {
         return null;

@@ -10,7 +10,7 @@ import com.beust.jcommander.Parameters;
  * @author Miguel Fontes
  */
 @Parameters(commandNames = "add-task", commandDescription = "Adds a new task")
-public class AddTaskCommand implements Command {
+public final class AddTaskCommand implements Command {
 
     private AddTaskCommand() {
     }
