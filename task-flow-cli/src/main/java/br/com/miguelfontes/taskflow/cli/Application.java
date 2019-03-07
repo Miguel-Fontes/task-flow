@@ -1,7 +1,8 @@
 package br.com.miguelfontes.taskflow.cli;
 
-import java.util.Arrays;
 import java.util.List;
+
+import static java.util.Arrays.asList;
 
 /**
  * The application entry point
@@ -14,7 +15,7 @@ public class Application {
     }
 
     private static List<Command> getCommands() {
-        return Arrays.asList(AddTaskCommand.instance(), AddUserCommand.instance());
+        return asList(AddTaskCommand.instance(), AddUserCommand.instance());
     }
 
 }
