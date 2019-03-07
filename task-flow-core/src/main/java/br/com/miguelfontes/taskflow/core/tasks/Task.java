@@ -1,6 +1,7 @@
 package br.com.miguelfontes.taskflow.core.tasks;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 /**
  * Represents a task on the domain
@@ -15,11 +16,18 @@ public final class Task {
     private final User author;
 
     private Task(String title, LocalDateTime createdAt, LocalDateTime updatedAt, TaskStatus status, User author) {
+        guardIsValidTitle(title);
+
         this.title = title;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
         this.status = status;
         this.author = author;
+    }
+
+    private void guardIsValidTitle(String title) {
+        if (Objects.isNull(title) || title.trim().length() < 1)
+            throw new IllegalArgumentException("Given Task title [%s] is invalid (null or length below 1)");
     }
 
     public static Task newInstance(User author, String title) {

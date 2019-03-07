@@ -16,6 +16,8 @@ public final class User {
     private final LocalDateTime updatedAt;
 
     private User(UUID id, String name, LocalDateTime createdAt, LocalDateTime updatedAt) {
+        guardIsValidName(name);
+
         this.id = id;
         this.name = name;
         this.createdAt = createdAt;
@@ -23,9 +25,13 @@ public final class User {
     }
 
     public static User newInstance(String name) {
-        guardIsValidName(name);
         return new User(UUID.randomUUID(), name, LocalDateTime.now(), LocalDateTime.now());
     }
+
+    public static User of(UUID id, String name, LocalDateTime createdAt, LocalDateTime updatedAt) {
+        return new User(id, name, createdAt, updatedAt);
+    }
+
 
     private static void guardIsValidName(String name) {
         if (Objects.isNull(name) || name.trim().length() < 3)
