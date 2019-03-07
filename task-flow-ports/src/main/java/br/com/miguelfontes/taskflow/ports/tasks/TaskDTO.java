@@ -10,7 +10,7 @@ import java.util.UUID;
  *
  * @author Miguel Fontes
  */
-public class TaskDTO {
+public final class TaskDTO {
     private final String title;
     private final LocalDateTime createdAt;
     private final LocalDateTime updatedAt;

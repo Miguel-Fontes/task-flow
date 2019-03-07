@@ -10,7 +10,7 @@ import java.util.UUID;
  *
  * @author Miguel Fontes
  */
-public class UserDTO {
+public final class UserDTO {
     private final UUID id;
     private final String name;
     private final LocalDateTime createdAt;
@@ -23,8 +23,12 @@ public class UserDTO {
         this.updatedAt = updatedAt;
     }
 
-    public static UserDTO from(User user) {
+    static UserDTO from(User user) {
         return new UserDTO(user.getId(), user.getName(), user.getCreatedAt(), user.getUpdatedAt());
+    }
+
+    public UUID getId() {
+        return id;
     }
 
     public String getName() {
