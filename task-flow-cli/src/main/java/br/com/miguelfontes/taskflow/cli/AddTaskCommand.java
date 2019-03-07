@@ -10,10 +10,19 @@ import com.beust.jcommander.Parameters;
  */
 @Parameters(commandNames = "add-task", commandDescription = "Adds a new task")
 class AddTaskCommand implements Command {
+
+    private AddTaskCommand() {
+    }
+
+    static AddTaskCommand instance() {
+        return new AddTaskCommand();
+    }
+
     @Parameter(description = "The Task's title ")
     private String title;
 
     public void execute() {
 
+        System.out.println(String.format("You've entered the title [%s]", title));
     }
 }
