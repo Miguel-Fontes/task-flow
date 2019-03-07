@@ -16,7 +16,7 @@ public final class CreateUserUseCase implements CreateUser {
     private CreateUserUseCase() {
     }
 
-    static CreateUserUseCase instance() {
+    public static CreateUserUseCase instance() {
         return new CreateUserUseCase();
     }
 

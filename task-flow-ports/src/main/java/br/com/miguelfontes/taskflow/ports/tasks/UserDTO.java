@@ -42,4 +42,14 @@ public final class UserDTO {
     public LocalDateTime getUpdatedAt() {
         return updatedAt;
     }
+
+    @Override
+    public String toString() {
+        return "UserDTO{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", createdAt=" + createdAt +
+                ", updatedAt=" + updatedAt +
+                '}';
+    }
 }

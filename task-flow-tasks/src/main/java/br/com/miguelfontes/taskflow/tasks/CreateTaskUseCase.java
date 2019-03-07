@@ -13,12 +13,12 @@ import java.util.Optional;
  *
  * @author Miguel Fontes
  */
-final class CreateTaskUseCase implements CreateTask {
+public final class CreateTaskUseCase implements CreateTask {
 
     private CreateTaskUseCase() {
     }
 
-    static CreateTaskUseCase instance() {
+    public static CreateTaskUseCase instance() {
         return new CreateTaskUseCase();
     }
 

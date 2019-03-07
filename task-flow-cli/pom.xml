@@ -58,6 +58,12 @@
             <artifactId>task-flow-ports</artifactId>
             <version>${project.parent.version}</version>
         </dependency>
+        <dependency>
+            <groupId>br.com.miguelfontes</groupId>
+            <artifactId>task-flow-tasks</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+
 
     </dependencies>
 

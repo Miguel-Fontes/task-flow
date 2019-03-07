@@ -3,6 +3,11 @@
   <component name="ClojureProjectResolveSettings">
     <currentScheme>IDE</currentScheme>
   </component>
+  <component name="EntryPointsManager">
+    <writeAnnotations>
+      <writeAnnotation name="com.beust.jcommander.Parameter" />
+    </writeAnnotations>
+  </component>
   <component name="MavenProjectsManager">
     <option name="originalFiles">
       <list>

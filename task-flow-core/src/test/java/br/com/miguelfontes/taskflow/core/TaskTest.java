@@ -7,7 +7,9 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 class TaskTest {
 
@@ -42,6 +44,12 @@ class TaskTest {
         @DisplayName("should create a task on INBOX status")
         void shouldCreateANewTaskWithInboxStatus() {
             assertEquals(TaskStatus.INBOX, task.getStatus());
+        }
+
+        @Test
+        @DisplayName("should display a new id when a new Task is created")
+        void shouldGenerateANewIdWhenANewTaskIsCreated() {
+            assertNotNull(task.getId());
         }
     }
 

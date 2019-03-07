@@ -25,7 +25,7 @@ public final class TaskDTO {
         this.author = author;
     }
 
-    public static TaskDTO from(Task task) {
+    static TaskDTO from(Task task) {
         return new TaskDTO(task.getTitle(), task.getCreatedAt(), task.getUpdatedAt(), task.getStatus().toString(), task.getAuthor().getId());
     }
 
@@ -47,5 +47,16 @@ public final class TaskDTO {
 
     public UUID getAuthor() {
         return author;
+    }
+
+    @Override
+    public String toString() {
+        return "TaskDTO{" +
+                "title='" + title + '\'' +
+                ", createdAt=" + createdAt +
+                ", updatedAt=" + updatedAt +
+                ", status='" + status + '\'' +
+                ", author=" + author +
+                '}';
     }
 }

@@ -2,6 +2,7 @@ package br.com.miguelfontes.taskflow.core.tasks;
 
 import java.time.LocalDateTime;
 import java.util.Objects;
+import java.util.UUID;
 
 /**
  * Represents a task on the domain
@@ -9,6 +10,7 @@ import java.util.Objects;
  * @author Miguel Fontes
  */
 public final class Task {
+    private final UUID id;
     private final String title;
     private final LocalDateTime createdAt;
     private final LocalDateTime updatedAt;
@@ -18,6 +20,7 @@ public final class Task {
     private Task(String title, LocalDateTime createdAt, LocalDateTime updatedAt, TaskStatus status, User author) {
         guardIsValidTitle(title);
 
+        this.id = UUID.randomUUID();
         this.title = title;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
@@ -32,6 +35,10 @@ public final class Task {
 
     public static Task newInstance(User author, String title) {
         return new Task(title, LocalDateTime.now(), LocalDateTime.now(), TaskStatus.INBOX, author);
+    }
+
+    public UUID getId() {
+        return id;
     }
 
     public String getTitle() {
