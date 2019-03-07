@@ -82,4 +82,15 @@ class DispatcherTest {
         dispatcher.dispatch();
         assertTrue(command.hasBeenCalled());
     }
+
+    @Test
+    @DisplayName("should set command's attributes")
+    void shouldSetCommandAttributes() {
+        String[] arguments = {TEST_COMMAND_2, TEST_ARGUMENT_2};
+        TestCommand2 command = new TestCommand2();
+
+        Dispatcher.newInstance(singletonList(command), arguments);
+
+        assertEquals(command.someString, TEST_ARGUMENT_2);
+    }
 }
