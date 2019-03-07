@@ -1,5 +1,6 @@
-package br.com.miguelfontes.taskflow.cli;
+package br.com.miguelfontes.taskflow.cli.commands;
 
+import br.com.miguelfontes.taskflow.cli.Command;
 import com.beust.jcommander.Parameter;
 import com.beust.jcommander.Parameters;
 
@@ -9,12 +10,12 @@ import com.beust.jcommander.Parameters;
  * @author Miguel Fontes
  */
 @Parameters(commandNames = "add-task", commandDescription = "Adds a new task")
-class AddTaskCommand implements Command {
+public class AddTaskCommand implements Command {
 
     private AddTaskCommand() {
     }
 
-    static AddTaskCommand instance() {
+    public static AddTaskCommand instance() {
         return new AddTaskCommand();
     }
 

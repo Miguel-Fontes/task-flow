@@ -1,5 +1,8 @@
 package br.com.miguelfontes.taskflow.cli;
 
+import br.com.miguelfontes.taskflow.cli.commands.AddTaskCommand;
+import br.com.miguelfontes.taskflow.cli.commands.AddUserCommand;
+
 import java.util.List;
 
 import static java.util.Arrays.asList;
