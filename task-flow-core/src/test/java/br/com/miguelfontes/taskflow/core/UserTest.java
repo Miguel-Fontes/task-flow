@@ -11,9 +11,10 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
+@DisplayName("user")
 class UserTest {
     private static final String userName = "a user name";
-    private User user = User.newInstance(userName);
+    private final User user = User.newInstance(userName);
 
     @Nested
     @DisplayName("newInstance factory method")
@@ -32,18 +33,24 @@ class UserTest {
                     () -> assertNotNull(user.getUpdatedAt())
             );
         }
+
+        @Test
+        @DisplayName("should generate a id")
+        void shouldGenerateAId() {
+            assertNotNull(user.getId());
+        }
     }
 
     @Nested
     @DisplayName("createTask")
     class createTask {
-        private String title = "A task title";
-        Task task = Task.newInstance(user, title);
+        private static final String TASK_TITLE = "A task title";
+        private final Task task = user.createTask(TASK_TITLE);
 
         @Test
         @DisplayName("should create a task with given title")
         void shouldCreateATaskWithGivenTitle() {
-            assertEquals(title, task.getTitle());
+            assertEquals(TASK_TITLE, task.getTitle());
         }
 
         @Test
