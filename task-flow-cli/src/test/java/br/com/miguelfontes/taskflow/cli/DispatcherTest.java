@@ -91,6 +91,6 @@ class DispatcherTest {
 
         Dispatcher.newInstance(singletonList(command), arguments);
 
-        assertEquals(command.someString, TEST_ARGUMENT_2);
+        assertEquals(TEST_ARGUMENT_2, command.someString);
     }
 }

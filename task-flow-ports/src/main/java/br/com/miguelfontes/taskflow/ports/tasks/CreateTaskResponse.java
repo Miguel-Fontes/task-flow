@@ -2,14 +2,12 @@ package br.com.miguelfontes.taskflow.ports.tasks;
 
 import br.com.miguelfontes.taskflow.core.tasks.Task;
 
-import java.io.Serializable;
-
 /**
  * Encapsulates the data returned by a create {@link Task} operation.
  *
  * @author Miguel Fontes
  */
-public final class CreateTaskResponse implements Serializable {
+public final class CreateTaskResponse {
     private final TaskDTO task;
 
     private CreateTaskResponse(TaskDTO task) {
