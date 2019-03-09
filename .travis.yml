@@ -44,5 +44,3 @@ deploy:
   on:
     tags: true
     condition: $TRAVIS_TAG =~ ^$ARTIFACT_NAME-.*(beta|alpha|pre).*$
-
-  # mvn sonar:sonar -Dsonar.projectKey=Miguel-Fontes_task-flow -Dsonar.organization=miguel-fontes-github -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=4e5fe1d23d8e51478d470fa4518f21774068c089

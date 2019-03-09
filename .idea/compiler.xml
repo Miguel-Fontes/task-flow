@@ -16,10 +16,10 @@
     <bytecodeTargetLevel>
       <module name="task-flow" target="1.11" />
       <module name="task-flow-cli" target="1.11" />
-      <module name="task-flow-core" target="11" />
+      <module name="task-flow-core" target="1.11" />
       <module name="task-flow-grpc" target="1.11" />
-      <module name="task-flow-ports" target="11" />
-      <module name="task-flow-tasks" target="11" />
+      <module name="task-flow-ports" target="1.11" />
+      <module name="task-flow-tasks" target="1.11" />
     </bytecodeTargetLevel>
   </component>
 </project>
