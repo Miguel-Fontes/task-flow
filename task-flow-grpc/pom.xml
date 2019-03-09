@@ -11,7 +11,7 @@
 
     <artifactId>task-flow-grpc</artifactId>
 
-    <name>task-flow-grpc</name>
+    <name>Task Flow gRPC</name>
     <url>https://github.com/Miguel-Fontes/task-flow</url>
     <description>A runtime that uses gRPC to expose a public API</description>
 
