@@ -15,11 +15,7 @@ public class TasksServiceGrpcImpl extends TasksServiceGrpc.TasksServiceImplBase 
 
     @Override
     public void create(TasksServiceOuterClass.CreateTaskRequest request, StreamObserver<TasksServiceOuterClass.CreateTaskResponse> responseObserver) {
-        super.create(request, responseObserver);
-
-        System.out.println(request);
-
-        CreateTaskRequest createTaskRequest = CreateTaskRequest.of(UUID.randomUUID(), request.getTitle());
+        CreateTaskRequest createTaskRequest = CreateTaskRequest.of(UUID.fromString(request.getUserId()), request.getTitle());
         TaskDTO task = createTask.execute(createTaskRequest).getTask();
 
         TasksServiceOuterClass.CreateTaskResponse response = TasksServiceOuterClass.CreateTaskResponse.newBuilder()

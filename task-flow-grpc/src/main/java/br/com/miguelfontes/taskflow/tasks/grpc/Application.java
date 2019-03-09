@@ -10,7 +10,7 @@ import java.io.IOException;
  *
  * @author Miguel Fontes
  */
-public class TaskFlowApplication {
+public class Application {
 
     public static void main(String[] args) throws IOException, InterruptedException {
         Server server = ServerBuilder.forPort(8080)
@@ -19,7 +19,7 @@ public class TaskFlowApplication {
 
         server.start();
 
-        System.out.println("Server started");
+        System.out.println("Server started!");
 
         server.awaitTermination();
     }

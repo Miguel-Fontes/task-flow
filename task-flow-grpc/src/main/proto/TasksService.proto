@@ -2,7 +2,8 @@ syntax = "proto3";
 package br.com.miguelfontes.taskflow.tasks.grpc;
 
 message CreateTaskRequest {
-    string title = 1;
+    string userId = 1;
+    string title = 2;
 }
 
 message CreateTaskResponse {
