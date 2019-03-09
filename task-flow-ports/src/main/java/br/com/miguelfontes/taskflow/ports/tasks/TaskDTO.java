@@ -31,6 +31,10 @@ public final class TaskDTO {
         return new TaskDTO(task.getId(), task.getTitle(), task.getCreatedAt(), task.getUpdatedAt(), task.getStatus().toString(), task.getAuthor().getId());
     }
 
+    public UUID getId() {
+        return id;
+    }
+
     public String getTitle() {
         return title;
     }

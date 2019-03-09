@@ -19,6 +19,7 @@ public final class Task {
 
     private Task(String title, LocalDateTime createdAt, LocalDateTime updatedAt, TaskStatus status, User author) {
         guardIsValidTitle(title);
+        guardIsValidAuthor(author);
 
         this.id = UUID.randomUUID();
         this.title = title;
@@ -30,7 +31,12 @@ public final class Task {
 
     private void guardIsValidTitle(String title) {
         if (Objects.isNull(title) || title.trim().length() < 1)
-            throw new IllegalArgumentException("Given Task title [%s] is invalid (null or length below 1)");
+            throw new IllegalArgumentException("Given Task title is invalid (null or blank");
+    }
+
+    private void guardIsValidAuthor(User author) {
+        if (Objects.isNull(author))
+            throw new IllegalArgumentException("Given author is null!");
     }
 
     public static Task newInstance(User author, String title) {
