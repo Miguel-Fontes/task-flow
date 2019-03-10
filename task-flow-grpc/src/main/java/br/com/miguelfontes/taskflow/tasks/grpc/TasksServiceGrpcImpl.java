@@ -13,6 +13,13 @@ public class TasksServiceGrpcImpl extends TasksServiceGrpc.TasksServiceImplBase 
 
     private static final CreateTask createTask = CreateTaskUseCase.instance();
 
+    private TasksServiceGrpcImpl() {
+    }
+
+    public static TasksServiceGrpc.TasksServiceImplBase instance() {
+        return new TasksServiceGrpcImpl();
+    }
+
     @Override
     public void create(TasksServiceOuterClass.CreateTaskRequest request, StreamObserver<TasksServiceOuterClass.CreateTaskResponse> responseObserver) {
         CreateTaskRequest createTaskRequest = CreateTaskRequest.of(UUID.fromString(request.getUserId()), request.getTitle());

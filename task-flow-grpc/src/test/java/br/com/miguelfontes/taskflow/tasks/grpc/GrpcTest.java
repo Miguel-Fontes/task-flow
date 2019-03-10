@@ -22,7 +22,7 @@ class GrpcTest {
 
     @BeforeAll
     static void setup() throws IOException {
-        server = serverBuilder.addService(new TasksServiceGrpcImpl()).build().start();
+        server = serverBuilder.addService(TasksServiceGrpcImpl.instance()).build().start();
         channel = channelBuilder.build();
         stub = TasksServiceGrpc.newBlockingStub(channel);
     }
