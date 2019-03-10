@@ -27,6 +27,10 @@ public final class TaskDTO {
         this.author = author;
     }
 
+    public static TaskDTO of(UUID id, String title, LocalDateTime createdAt, LocalDateTime updatedAt, String status, UUID author) {
+        return new TaskDTO(id, title, createdAt, updatedAt, status, author);
+    }
+
     static TaskDTO from(Task task) {
         return new TaskDTO(task.getId(), task.getTitle(), task.getCreatedAt(), task.getUpdatedAt(), task.getStatus().toString(), task.getAuthor().getId());
     }

@@ -18,6 +18,10 @@ public final class CreateTaskResponse {
         return new CreateTaskResponse(TaskDTO.from(task));
     }
 
+    public static CreateTaskResponse of(TaskDTO taskDTO) {
+        return new CreateTaskResponse(taskDTO);
+    }
+
     public TaskDTO getTask() {
         return task;
     }

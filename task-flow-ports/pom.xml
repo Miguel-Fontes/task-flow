@@ -11,7 +11,7 @@
 
     <artifactId>task-flow-ports</artifactId>
 
-    <name>task-flow-ports</name>
+    <name>Task Flow Ports</name>
     <url>https://github.com/Miguel-Fontes/task-flow</url>
     <description>Common port definitions of the Task Flow project</description>
 

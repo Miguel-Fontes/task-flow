@@ -11,7 +11,7 @@
 
     <artifactId>task-flow-tasks</artifactId>
 
-    <name>task-flow-tasks</name>
+    <name>Task Flow Tasks</name>
     <url>https://github.com/Miguel-Fontes/task-flow</url>
     <description>Implements the Tasks port of the Task Flow project, granting access the to Tasks bounded context
     </description>

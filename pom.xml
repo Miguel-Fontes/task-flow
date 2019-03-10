@@ -9,7 +9,6 @@
     <modules>
         <module>task-flow-core</module>
         <module>task-flow-ports</module>
-        <module>task-flow-cli</module>
         <module>task-flow-tasks</module>
         <module>task-flow-grpc</module>
     </modules>
