@@ -1,8 +1,10 @@
 package br.com.miguelfontes.taskflow.tasks.grpc;
 
+import br.com.miguelfontes.taskflow.ports.tasks.CreateTask;
 import io.grpc.Server;
 import io.grpc.ServerBuilder;
 
+import javax.inject.Inject;
 import java.io.IOException;
 import java.util.Optional;
 
@@ -14,10 +16,14 @@ import java.util.Optional;
 public class Application {
 
     public static void main(String[] args) throws IOException, InterruptedException {
+        Weld weld = new Weld();
+        WeldContainer container = weld.initialize();
+        CreateTask createTask = container.select(CreateTask.class).get();
+
         var port = getPort(args);
 
         Server server = ServerBuilder.forPort(port)
-                .addService(TasksServiceGrpcImpl.instance())
+                .addService(TasksServiceGrpcImpl.instance(createTask))
                 .build();
 
         server.start();
@@ -25,6 +31,7 @@ public class Application {
         System.out.println(String.format("Server started on port [%s]!", port));
 
         server.awaitTermination();
+        container.shutdown();
     }
 
     private static Integer getPort(String[] args) {

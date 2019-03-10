@@ -3,7 +3,6 @@ package br.com.miguelfontes.taskflow.tasks.grpc;
 import br.com.miguelfontes.taskflow.ports.tasks.CreateTask;
 import br.com.miguelfontes.taskflow.ports.tasks.CreateTaskRequest;
 import br.com.miguelfontes.taskflow.ports.tasks.TaskDTO;
-import br.com.miguelfontes.taskflow.tasks.CreateTaskUseCase;
 import io.grpc.stub.StreamObserver;
 
 import java.util.UUID;
@@ -11,13 +10,14 @@ import java.util.UUID;
 
 public class TasksServiceGrpcImpl extends TasksServiceGrpc.TasksServiceImplBase {
 
-    private static final CreateTask createTask = CreateTaskUseCase.instance();
+    private final CreateTask createTask;
 
-    private TasksServiceGrpcImpl() {
+    private TasksServiceGrpcImpl(CreateTask createTask) {
+        this.createTask = createTask;
     }
 
-    public static TasksServiceGrpc.TasksServiceImplBase instance() {
-        return new TasksServiceGrpcImpl();
+    public static TasksServiceGrpc.TasksServiceImplBase instance(CreateTask createTask) {
+        return new TasksServiceGrpcImpl(createTask);
     }
 
     @Override
