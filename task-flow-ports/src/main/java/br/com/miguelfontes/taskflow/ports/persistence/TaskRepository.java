@@ -1,4 +1,4 @@
-package br.com.miguelfontes.taskflow.ports.repository;
+package br.com.miguelfontes.taskflow.ports.persistence;
 
 import br.com.miguelfontes.taskflow.core.tasks.Task;
 
