@@ -1,5 +1,6 @@
 package br.com.miguelfontes.taskflow.tasks.grpc;
 
+import br.com.miguelfontes.taskflow.persistence.mmdb.TaskRepositoryMMDB;
 import br.com.miguelfontes.taskflow.tasks.CreateTaskUseCase;
 import io.grpc.ManagedChannel;
 import io.grpc.Server;
@@ -23,7 +24,9 @@ class GrpcTest {
 
     @BeforeAll
     static void setup() throws IOException {
-        server = serverBuilder.addService(TasksServiceGrpcImpl.instance(CreateTaskUseCase.instance())).build().start();
+        var repository = TaskRepositoryMMDB.instance();
+
+        server = serverBuilder.addService(TasksServiceGrpcImpl.instance(CreateTaskUseCase.instance(repository))).build().start();
         channel = channelBuilder.build();
         stub = TasksServiceGrpc.newBlockingStub(channel);
     }

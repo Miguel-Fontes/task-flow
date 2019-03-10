@@ -1,5 +1,6 @@
 package br.com.miguelfontes.taskflow.tasks.grpc;
 
+import br.com.miguelfontes.taskflow.persistence.mmdb.TaskRepositoryMMDB;
 import br.com.miguelfontes.taskflow.tasks.CreateTaskUseCase;
 import io.grpc.Server;
 import io.grpc.ServerBuilder;
@@ -8,6 +9,7 @@ import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.util.Optional;
+
 /**
  * Manages a GRPC server, exposing the Tasks API for external clients
  *
@@ -20,7 +22,7 @@ public class Application {
     public static void main(String[] args) throws IOException, InterruptedException {
         var port = getPort(args);
         Server server = ServerBuilder.forPort(port)
-                .addService(TasksServiceGrpcImpl.instance(CreateTaskUseCase.instance()))
+                .addService(TasksServiceGrpcImpl.instance(CreateTaskUseCase.instance(TaskRepositoryMMDB.instance())))
                 .build();
 
         server.start();

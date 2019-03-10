@@ -122,6 +122,11 @@
             <artifactId>task-flow-tasks</artifactId>
             <version>${project.parent.version}</version>
         </dependency>
+        <dependency>
+            <groupId>br.com.miguelfontes</groupId>
+            <artifactId>task-flow-persistence-mmdb</artifactId>
+            <version>${project.parent.version}</version>
+        </dependency>
     </dependencies>
 
 </project>

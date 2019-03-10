@@ -9,9 +9,9 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>task-flow-repository-mmdb</artifactId>
+    <artifactId>task-flow-persistence-mmdb</artifactId>
 
-    <name>task-flow-repository-mmdb</name>
+    <name>Task Flow Persistence MMDB</name>
     <url>https://github.com/Miguel-Fontes/task-flow</url>
     <description>In memory repositories intended to be used in development</description>
 
