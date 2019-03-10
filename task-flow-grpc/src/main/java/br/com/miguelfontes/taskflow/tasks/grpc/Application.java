@@ -1,13 +1,13 @@
 package br.com.miguelfontes.taskflow.tasks.grpc;
 
-import br.com.miguelfontes.taskflow.ports.tasks.CreateTask;
+import br.com.miguelfontes.taskflow.tasks.CreateTaskUseCase;
 import io.grpc.Server;
 import io.grpc.ServerBuilder;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import javax.inject.Inject;
 import java.io.IOException;
 import java.util.Optional;
-
 /**
  * Manages a GRPC server, exposing the Tasks API for external clients
  *
@@ -15,23 +15,19 @@ import java.util.Optional;
  */
 public class Application {
 
+    private static Logger logger = LoggerFactory.getLogger(Application.class);
+
     public static void main(String[] args) throws IOException, InterruptedException {
-        Weld weld = new Weld();
-        WeldContainer container = weld.initialize();
-        CreateTask createTask = container.select(CreateTask.class).get();
-
         var port = getPort(args);
-
         Server server = ServerBuilder.forPort(port)
-                .addService(TasksServiceGrpcImpl.instance(createTask))
+                .addService(TasksServiceGrpcImpl.instance(CreateTaskUseCase.instance()))
                 .build();
 
         server.start();
 
-        System.out.println(String.format("Server started on port [%s]!", port));
+        logger.info(String.format("Server started on port [%s]!", port));
 
         server.awaitTermination();
-        container.shutdown();
     }
 
     private static Integer getPort(String[] args) {
@@ -46,3 +42,4 @@ public class Application {
                 : Optional.empty();
     }
 }
+

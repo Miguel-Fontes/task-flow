@@ -1,5 +1,6 @@
 package br.com.miguelfontes.taskflow.tasks.grpc;
 
+import br.com.miguelfontes.taskflow.tasks.CreateTaskUseCase;
 import io.grpc.ManagedChannel;
 import io.grpc.Server;
 import io.grpc.inprocess.InProcessChannelBuilder;
@@ -22,7 +23,7 @@ class GrpcTest {
 
     @BeforeAll
     static void setup() throws IOException {
-        server = serverBuilder.addService(TasksServiceGrpcImpl.instance()).build().start();
+        server = serverBuilder.addService(TasksServiceGrpcImpl.instance(CreateTaskUseCase.instance())).build().start();
         channel = channelBuilder.build();
         stub = TasksServiceGrpc.newBlockingStub(channel);
     }
