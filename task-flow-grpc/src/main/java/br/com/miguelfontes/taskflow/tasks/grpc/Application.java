@@ -27,7 +27,7 @@ public class Application {
 
         server.start();
 
-        logger.info(String.format("Server started on port [%s]!", port));
+        logger.info("Server started on port [{}]!", port);
 
         server.awaitTermination();
     }
