@@ -28,11 +28,15 @@ public final class CreateTaskUseCase implements CreateTask {
 
     @Override
     public CreateTaskResponse execute(CreateTaskRequest request) {
-        return Optional.of(User.newInstance(request.getUserId().toString()))
-                .map(user -> User.of(request.getUserId(), user.getName(), user.getCreatedAt(), user.getUpdatedAt())) // This is a temporary logic, while there is no persistence
+        return Optional.of(getUserById(request))
                 .map(user -> user.createTask(request.getTitle()))
                 .map(repository::save)
                 .map(CreateTaskResponse::from)
                 .orElseThrow(IllegalArgumentException::new);
+    }
+
+    private User getUserById(CreateTaskRequest request) {
+        var user = User.newInstance(request.getUserId().toString());
+        return User.of(request.getUserId(), user.getName(), user.getCreatedAt(), user.getUpdatedAt()); // This is a temporary logic, while there is no persistence
     }
 }
