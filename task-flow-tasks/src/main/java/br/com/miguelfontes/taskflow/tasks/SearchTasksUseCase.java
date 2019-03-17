@@ -5,7 +5,7 @@ import br.com.miguelfontes.taskflow.ports.persistence.TaskRepository;
 import br.com.miguelfontes.taskflow.ports.tasks.SearchTasks;
 import br.com.miguelfontes.taskflow.ports.tasks.SearchTasksRequest;
 import br.com.miguelfontes.taskflow.ports.tasks.SearchTasksResponse;
-import br.com.miguelfontes.taskflow.ports.tasks.TaskDTO;
+import br.com.miguelfontes.taskflow.tasks.factories.TaskDTOFactory;
 
 import java.util.List;
 
@@ -36,7 +36,7 @@ public class SearchTasksUseCase implements SearchTasks {
 
     private SearchTasksResponse responseFrom(List<Task> tasks) {
         return SearchTasksResponse.of(tasks.stream()
-                .map(TaskDTO::from)
+                .map(TaskDTOFactory::from)
                 .collect(toList()));
     }
 }
