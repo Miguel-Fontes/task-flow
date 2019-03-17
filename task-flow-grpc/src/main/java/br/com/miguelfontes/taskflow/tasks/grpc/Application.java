@@ -2,6 +2,7 @@ package br.com.miguelfontes.taskflow.tasks.grpc;
 
 import br.com.miguelfontes.taskflow.persistence.mmdb.TaskRepositoryMMDB;
 import br.com.miguelfontes.taskflow.tasks.CreateTaskUseCase;
+import br.com.miguelfontes.taskflow.tasks.SearchTasksUseCase;
 import io.grpc.Server;
 import io.grpc.ServerBuilder;
 import org.slf4j.Logger;
@@ -21,8 +22,11 @@ public class Application {
 
     public static void main(String[] args) throws IOException, InterruptedException {
         var port = getPort(args);
+        var taskRepositoryInstance = TaskRepositoryMMDB.instance();
         Server server = ServerBuilder.forPort(port)
-                .addService(TasksServiceGrpcImpl.instance(CreateTaskUseCase.instance(TaskRepositoryMMDB.instance())))
+                .addService(TasksServiceGrpcImpl.instance(
+                        CreateTaskUseCase.instance(taskRepositoryInstance),
+                        SearchTasksUseCase.instance(taskRepositoryInstance)))
                 .build();
 
         server.start();
