@@ -1,6 +1,8 @@
 package br.com.miguelfontes.taskflow.tasks;
 
 import br.com.miguelfontes.taskflow.core.tasks.TaskStatus;
+import br.com.miguelfontes.taskflow.persistence.mmdb.TaskRepositoryMMDB;
+import br.com.miguelfontes.taskflow.ports.persistence.TaskRepository;
 import br.com.miguelfontes.taskflow.ports.tasks.CreateTask;
 import br.com.miguelfontes.taskflow.ports.tasks.CreateTaskRequest;
 import br.com.miguelfontes.taskflow.ports.tasks.TaskDTO;
@@ -22,7 +24,8 @@ class CreateTaskUseCaseTest {
     private static final UUID USER_ID = UUID.randomUUID();
     private static final String TASK_TITLE = "A task title!";
 
-    private final CreateTask useCase = CreateTaskUseCase.instance();
+    private final TaskRepository repository = TaskRepositoryMMDB.instance();
+    private final CreateTask useCase = CreateTaskUseCase.instance(repository);
 
     @Test
     @DisplayName("should create a new task")
@@ -60,7 +63,7 @@ class CreateTaskUseCaseTest {
     @DisplayName("should not consider leading and trailing spaces on title length validation")
     @ValueSource(strings = {" ", "  ", "   ", "    "})
     void shouldNotConsiderLeadingAndTrailingSpacesOnTitleLengthValidation(String title) {
-         CreateTaskRequest request = CreateTaskRequest.of(USER_ID, title);
+        CreateTaskRequest request = CreateTaskRequest.of(USER_ID, title);
 
         assertThrows(IllegalArgumentException.class, () -> useCase.execute(request));
     }

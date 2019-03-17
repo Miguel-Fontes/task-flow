@@ -6,10 +6,13 @@ import br.com.miguelfontes.taskflow.core.tasks.User;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @DisplayName("user")
 class UserTest {
@@ -19,26 +22,57 @@ class UserTest {
     @Nested
     @DisplayName("newInstance factory method")
     class newInstanceFactoryMethod {
-        @Test
-        @DisplayName("should create a new instance with a given name name")
-        void shouldCreateANewInstanceWithAGivenName() {
-            assertEquals(userName, user.getName());
+
+        @Nested
+        @DisplayName("valid arguments")
+        class validArguments {
+            @Test
+            @DisplayName("should create a new instance with a given name name")
+            void shouldCreateANewInstanceWithAGivenName() {
+                assertEquals(userName, user.getName());
+            }
+
+            @Test
+            @DisplayName("should set a Users creation time")
+            void shouldSetAUserCreationTime() {
+                assertAll(
+                        () -> assertNotNull(user.getCreatedAt()),
+                        () -> assertNotNull(user.getUpdatedAt())
+                );
+            }
+
+            @Test
+            @DisplayName("should generate a id")
+            void shouldGenerateAId() {
+                assertNotNull(user.getId());
+            }
         }
 
-        @Test
-        @DisplayName("should set a Users creation time")
-        void shouldSetAUserCreationTime() {
-            assertAll(
-                    () -> assertNotNull(user.getCreatedAt()),
-                    () -> assertNotNull(user.getUpdatedAt())
-            );
+        @Nested
+        @DisplayName("invalid aguments")
+        class invalidArguments {
+            @Test
+            @DisplayName("should throw exception when name is null")
+            void shouldThrowExceptionWhenNameIsNull() {
+                assertThrows(IllegalArgumentException.class, () -> User.newInstance(null));
+            }
+
+            @ParameterizedTest
+            @ValueSource(strings = {"a", "ab", "a  ", "  a"})
+            @DisplayName("should throw exception when name length is below 3")
+            void shouldThrowExceptionWhenNameLengthIsBelow3(String name) {
+                assertThrows(IllegalArgumentException.class, () -> User.newInstance(name));
+            }
+
+            @ParameterizedTest
+            @ValueSource(strings = {"", " ", "   ", "    "})
+            @DisplayName("should throw exception when name is blank or spaces")
+            void shouldThrowExceptionForBlankName(String name) {
+                assertThrows(IllegalArgumentException.class, () -> User.newInstance(name));
+            }
+
         }
 
-        @Test
-        @DisplayName("should generate a id")
-        void shouldGenerateAId() {
-            assertNotNull(user.getId());
-        }
     }
 
     @Nested

@@ -8,10 +8,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 import java.util.UUID;
 
-import static org.junit.jupiter.api.Assertions.assertAll;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 @DisplayName("task service grpc")
 class TasksServiceGrpcImplTest extends GrpcTest {
@@ -34,6 +31,29 @@ class TasksServiceGrpcImplTest extends GrpcTest {
                 () -> assertNotNull(response.getUpdatedAt()),
                 () -> assertNotNull(response.getStatus())
         );
+    }
+
+    @Test
+    @DisplayName("should create and retrieve a persisted task")
+    void shouldCreateAndRetrieveAPersistedTask() {
+        var createTaskRequest = buildCreateTaskRequest(USER_ID, TASK_TITLE);
+        var createTaskResponse = stub.create(createTaskRequest);
+        var searchTaskRequest = buildSearchTaskRequest("");
+
+
+        var list = stub.search(searchTaskRequest);
+
+        assertAll(
+                () -> assertFalse(list.getTasksList().isEmpty()),
+                () -> assertTrue(list.getTasksList().contains(createTaskResponse))
+        );
+    }
+
+    private TasksServiceOuterClass.SearchTasksRequest buildSearchTaskRequest(String title) {
+        return TasksServiceOuterClass.SearchTasksRequest.newBuilder()
+                .setTitle(title)
+                .build();
+
     }
 
     @Test
