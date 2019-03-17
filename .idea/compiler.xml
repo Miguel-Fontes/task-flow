@@ -7,21 +7,21 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="task-flow-cli" />
-        <module name="task-flow-core" />
-        <module name="task-flow-grpc" />
-        <module name="task-flow-persistence-mmdb" />
         <module name="task-flow-ports" />
+        <module name="task-flow-persistence-mmdb" />
+        <module name="task-flow-grpc" />
         <module name="task-flow-tasks" />
+        <module name="task-flow-core" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="task-flow" target="1.11" />
+      <module name="task-flow" target="11" />
       <module name="task-flow-cli" target="1.11" />
-      <module name="task-flow-core" target="1.11" />
-      <module name="task-flow-grpc" target="1.11" />
-      <module name="task-flow-persistence-mmdb" target="1.11" />
-      <module name="task-flow-ports" target="1.11" />
-      <module name="task-flow-tasks" target="1.11" />
+      <module name="task-flow-core" target="11" />
+      <module name="task-flow-grpc" target="11" />
+      <module name="task-flow-persistence-mmdb" target="11" />
+      <module name="task-flow-ports" target="11" />
+      <module name="task-flow-tasks" target="11" />
     </bytecodeTargetLevel>
   </component>
 </project>
