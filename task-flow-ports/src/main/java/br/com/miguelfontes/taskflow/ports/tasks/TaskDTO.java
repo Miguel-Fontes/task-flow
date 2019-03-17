@@ -31,7 +31,7 @@ public final class TaskDTO {
         return new TaskDTO(id, title, createdAt, updatedAt, status, author);
     }
 
-    static TaskDTO from(Task task) {
+    public static TaskDTO from(Task task) {
         return new TaskDTO(task.getId(), task.getTitle(), task.getCreatedAt(), task.getUpdatedAt(), task.getStatus().toString(), task.getAuthor().getId());
     }
 
