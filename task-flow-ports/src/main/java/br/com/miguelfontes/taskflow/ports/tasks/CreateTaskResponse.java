@@ -14,12 +14,8 @@ public final class CreateTaskResponse {
         this.task = task;
     }
 
-    public static CreateTaskResponse from(Task task) {
-        return new CreateTaskResponse(TaskDTO.from(task));
-    }
-
-    public static CreateTaskResponse of(TaskDTO taskDTO) {
-        return new CreateTaskResponse(taskDTO);
+    public static CreateTaskResponse of(TaskDTO task) {
+        return new CreateTaskResponse(task);
     }
 
     public TaskDTO getTask() {
