@@ -16,7 +16,7 @@ public class TasksServiceGrpcImpl extends TasksServiceGrpc.TasksServiceImplBase 
         this.createTask = createTask;
     }
 
-    public static TasksServiceGrpc.TasksServiceImplBase instance(CreateTask createTask) {
+    static TasksServiceGrpc.TasksServiceImplBase instance(CreateTask createTask) {
         return new TasksServiceGrpcImpl(createTask);
     }
 
@@ -36,5 +36,10 @@ public class TasksServiceGrpcImpl extends TasksServiceGrpc.TasksServiceImplBase 
 
         responseObserver.onNext(response);
         responseObserver.onCompleted();
+    }
+
+    @Override
+    public void list(TasksServiceOuterClass.SearchTasksRequest request, StreamObserver<TasksServiceOuterClass.SearchTasksResponse> responseObserver) {
+        super.list(request, responseObserver);
     }
 }

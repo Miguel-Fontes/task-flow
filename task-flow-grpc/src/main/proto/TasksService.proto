@@ -15,6 +15,15 @@ message CreateTaskResponse {
     string author = 6;
 }
 
+message SearchTasksRequest {
+    string title = 1;
+}
+
+message SearchTasksResponse {
+    repeated CreateTaskResponse tasks = 1;
+}
+
 service TasksService {
     rpc create (CreateTaskRequest) returns (CreateTaskResponse);
+    rpc list (SearchTasksRequest) returns (SearchTasksResponse);
 }
