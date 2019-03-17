@@ -3,11 +3,20 @@ package br.com.miguelfontes.taskflow.tasks.grpc;
 import br.com.miguelfontes.taskflow.ports.tasks.*;
 import io.grpc.stub.StreamObserver;
 
+import java.util.Collection;
+import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static java.util.stream.Collectors.toList;
 
 
+/**
+ * Implements the gRPC Tasks service, exposing the core Task Domain features the external clients
+ *
+ * @author Miguel Fontes
+ */
 public class TasksServiceGrpcImpl extends TasksServiceGrpc.TasksServiceImplBase {
 
     private final CreateTask createTask;
@@ -25,17 +34,25 @@ public class TasksServiceGrpcImpl extends TasksServiceGrpc.TasksServiceImplBase 
 
     @Override
     public void create(TasksServiceOuterClass.CreateTaskRequest request, StreamObserver<TasksServiceOuterClass.CreateTaskResponse> responseObserver) {
-        CreateTaskRequest createTaskRequest = CreateTaskRequest.of(UUID.fromString(request.getUserId()), request.getTitle());
-        TaskDTO task = createTask.execute(createTaskRequest).getTask();
-
-        var response = buildCreateTaskResponse(task);
+        var response = Stream.of(request)
+                .map(this::buildCreateTaskRequest)
+                .map(createTask::execute)
+                .map(CreateTaskResponse::getTask)
+                .map(this::toOuterTask)
+                .map(this::buildTaskResponse)
+                .findFirst()
+                .orElseThrow();
 
         responseObserver.onNext(response);
         responseObserver.onCompleted();
     }
 
-    private TasksServiceOuterClass.CreateTaskResponse buildCreateTaskResponse(TaskDTO task) {
-        return TasksServiceOuterClass.CreateTaskResponse.newBuilder()
+    private CreateTaskRequest buildCreateTaskRequest(TasksServiceOuterClass.CreateTaskRequest req) {
+        return CreateTaskRequest.of(UUID.fromString(req.getUserId()), req.getTitle());
+    }
+
+    private TasksServiceOuterClass.Task toOuterTask(TaskDTO task) {
+        return TasksServiceOuterClass.Task.newBuilder()
                 .setAuthor(task.getAuthor().toString())
                 .setId(task.getId().toString())
                 .setTitle(task.getTitle())
@@ -45,23 +62,39 @@ public class TasksServiceGrpcImpl extends TasksServiceGrpc.TasksServiceImplBase 
                 .build();
     }
 
+    private TasksServiceOuterClass.CreateTaskResponse buildTaskResponse(TasksServiceOuterClass.Task grpcTask) {
+        return TasksServiceOuterClass.CreateTaskResponse.newBuilder()
+                .setTask(grpcTask)
+                .build();
+    }
+
     @Override
     public void search(TasksServiceOuterClass.SearchTasksRequest request, StreamObserver<TasksServiceOuterClass.SearchTasksResponse> responseObserver) {
-        var searchTasksRequest = SearchTasksRequest.builder()
-                .title(request.getTitle())
-                .build();
-
-        var foundTasks = searchTasks.execute(searchTasksRequest)
-                .getTasks()
-                .stream()
-                .map(this::buildCreateTaskResponse)
-                .collect(toList());
-
-        var response = TasksServiceOuterClass.SearchTasksResponse.newBuilder()
-                .addAllTasks(foundTasks)
-                .build();
+        var response = Stream.of(request)
+                .map(this::buildSearchTaskRequest)
+                .map(searchTasks::execute)
+                .map(SearchTasksResponse::getTasks)
+                .flatMap(Collection::stream)
+                .map(this::toOuterTask)
+                .collect(Collectors.collectingAndThen(
+                        toList(),
+                        this::buildSearchTaskResponse
+                ));
 
         responseObserver.onNext(response);
         responseObserver.onCompleted();
     }
+
+    private SearchTasksRequest buildSearchTaskRequest(TasksServiceOuterClass.SearchTasksRequest request) {
+        return SearchTasksRequest.builder()
+                .title(request.getTitle())
+                .build();
+    }
+
+    private TasksServiceOuterClass.SearchTasksResponse buildSearchTaskResponse(List<TasksServiceOuterClass.Task> foundTasks) {
+        return TasksServiceOuterClass.SearchTasksResponse.newBuilder()
+                .addAllTasks(foundTasks)
+                .build();
+    }
+
 }

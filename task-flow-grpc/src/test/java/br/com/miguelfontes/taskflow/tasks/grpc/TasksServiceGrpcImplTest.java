@@ -21,7 +21,7 @@ class TasksServiceGrpcImplTest extends GrpcTest {
     void shouldCreateANewTask() {
         var request = buildCreateTaskRequest(USER_ID, TASK_TITLE);
 
-        var response = stub.create(request);
+        var response = stub.create(request).getTask();
 
         assertAll(
                 () -> assertEquals(TASK_TITLE, response.getTitle()),
@@ -37,7 +37,7 @@ class TasksServiceGrpcImplTest extends GrpcTest {
     @DisplayName("should create and retrieve a persisted task")
     void shouldCreateAndRetrieveAPersistedTask() {
         var createTaskRequest = buildCreateTaskRequest(USER_ID, TASK_TITLE);
-        var createTaskResponse = stub.create(createTaskRequest);
+        var createTaskResponse = stub.create(createTaskRequest).getTask();
         var searchTaskRequest = buildSearchTaskRequest("");
 
 
