@@ -4,6 +4,7 @@ import br.com.miguelfontes.taskflow.core.tasks.User;
 import br.com.miguelfontes.taskflow.ports.tasks.CreateUser;
 import br.com.miguelfontes.taskflow.ports.tasks.CreateUserRequest;
 import br.com.miguelfontes.taskflow.ports.tasks.CreateUserResponse;
+import br.com.miguelfontes.taskflow.ports.tasks.UserDTO;
 
 /**
  * Implements the {@link CreateUser} port , defining the {@link br.com.miguelfontes.taskflow.core.tasks.User} creation
@@ -22,6 +23,11 @@ public final class CreateUserUseCase implements CreateUser {
 
     @Override
     public CreateUserResponse execute(CreateUserRequest request) {
-        return CreateUserResponse.of(User.newInstance(request.getName()));
+        var user = User.newInstance(request.getName());
+        return CreateUserResponse.of(toUserDTO(user));
+    }
+
+    private UserDTO toUserDTO(User user) {
+        return UserDTO.of(user.getId(), user.getName(), user.getCreatedAt(), user.getUpdatedAt());
     }
 }

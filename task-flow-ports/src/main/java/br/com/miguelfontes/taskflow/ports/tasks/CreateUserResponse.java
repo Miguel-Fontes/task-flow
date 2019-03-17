@@ -14,8 +14,8 @@ public final class CreateUserResponse {
         this.user = user;
     }
 
-    public static CreateUserResponse of(User user) {
-        return new CreateUserResponse(UserDTO.from(user));
+    public static CreateUserResponse of(UserDTO user) {
+        return new CreateUserResponse(user);
     }
 
     public UserDTO getUser() {

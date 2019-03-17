@@ -23,8 +23,8 @@ public final class UserDTO {
         this.updatedAt = updatedAt;
     }
 
-    static UserDTO from(User user) {
-        return new UserDTO(user.getId(), user.getName(), user.getCreatedAt(), user.getUpdatedAt());
+    public static UserDTO of(UUID id, String name, LocalDateTime createdAt, LocalDateTime updatedAt) {
+        return new UserDTO(id, name, createdAt, updatedAt);
     }
 
     public UUID getId() {
