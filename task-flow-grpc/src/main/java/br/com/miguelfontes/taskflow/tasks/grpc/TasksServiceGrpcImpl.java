@@ -1,6 +1,12 @@
 package br.com.miguelfontes.taskflow.tasks.grpc;
 
-import br.com.miguelfontes.taskflow.ports.tasks.*;
+import br.com.miguelfontes.taskflow.ports.tasks.CreateTask;
+import br.com.miguelfontes.taskflow.ports.tasks.CreateTaskRequest;
+import br.com.miguelfontes.taskflow.ports.tasks.CreateTaskResponse;
+import br.com.miguelfontes.taskflow.ports.tasks.SearchTasks;
+import br.com.miguelfontes.taskflow.ports.tasks.SearchTasksRequest;
+import br.com.miguelfontes.taskflow.ports.tasks.SearchTasksResponse;
+import br.com.miguelfontes.taskflow.ports.tasks.TaskDTO;
 import io.grpc.stub.StreamObserver;
 
 import java.util.Collection;
