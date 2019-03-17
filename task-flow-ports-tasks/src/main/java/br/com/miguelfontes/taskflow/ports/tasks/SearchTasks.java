@@ -1,7 +1,7 @@
 package br.com.miguelfontes.taskflow.ports.tasks;
 
 /**
- * Fetches {@link br.com.miguelfontes.taskflow.core.tasks.Task} based on given search parameters
+ * Fetches a Task based on given search parameters
  *
  * @author Miguel Fontes
  */

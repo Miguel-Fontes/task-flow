@@ -1,11 +1,10 @@
 package br.com.miguelfontes.taskflow.ports.tasks;
 
-import br.com.miguelfontes.taskflow.core.tasks.Task;
 
 import java.util.UUID;
 
 /**
- * Encapsulates the data involved on a {@link Task} creation request.
+ * Encapsulates the data involved on a Task creation request.
  *
  * @author Miguel Fontes
  */

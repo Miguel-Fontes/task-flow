@@ -1,9 +1,7 @@
 package br.com.miguelfontes.taskflow.ports.tasks;
 
-import br.com.miguelfontes.taskflow.core.tasks.Task;
-
 /**
- * Creates a new {@link Task}.
+ * Creates a new Task
  *
  * @author Miguel Fontes
  */

@@ -7,7 +7,7 @@ import br.com.miguelfontes.taskflow.ports.tasks.CreateUserResponse;
 import br.com.miguelfontes.taskflow.ports.tasks.UserDTO;
 
 /**
- * Implements the {@link CreateUser} port , defining the {@link br.com.miguelfontes.taskflow.core.tasks.User} creation
+ * Implements the {@link CreateUser} port, defining the {@link br.com.miguelfontes.taskflow.core.tasks.User} creation
  * operation.
  *
  * @author Miguel Fontes

@@ -1,12 +1,10 @@
 package br.com.miguelfontes.taskflow.ports.tasks;
 
-import br.com.miguelfontes.taskflow.core.tasks.User;
-
 import java.time.LocalDateTime;
 import java.util.UUID;
 
 /**
- * Contains the data of a {@link User} on a Serializable fashion
+ * Contains the data of a User on a Serializable fashion
  *
  * @author Miguel Fontes
  */

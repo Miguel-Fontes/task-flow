@@ -1,9 +1,8 @@
 package br.com.miguelfontes.taskflow.ports.tasks;
 
-import br.com.miguelfontes.taskflow.core.tasks.Task;
 
 /**
- * Encapsulates the data returned by a create {@link Task} operation.
+ * Encapsulates the data returned by a create Task operation.
  *
  * @author Miguel Fontes
  */

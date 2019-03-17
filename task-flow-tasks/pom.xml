@@ -19,6 +19,11 @@
     <dependencies>
         <dependency>
             <groupId>br.com.miguelfontes</groupId>
+            <artifactId>task-flow-ports-tasks</artifactId>
+            <version>${project.parent.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>br.com.miguelfontes</groupId>
             <artifactId>task-flow-ports</artifactId>
             <version>${project.parent.version}</version>
         </dependency>

@@ -1,9 +1,7 @@
 package br.com.miguelfontes.taskflow.ports.tasks;
 
-import br.com.miguelfontes.taskflow.core.tasks.User;
-
 /**
- * Encapsulates the data returned by a {@link User} creation request
+ * Encapsulates the data returned by a User creation request
  *
  * @author Miguel Fontes
  */

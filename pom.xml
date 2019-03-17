@@ -8,10 +8,11 @@
     <version>1.0-SNAPSHOT</version>
     <modules>
         <module>task-flow-core</module>
-        <module>task-flow-ports</module>
+        <module>task-flow-ports-tasks</module>
+        <module>task-flow-ports-persistence</module>
         <module>task-flow-tasks</module>
-        <module>task-flow-grpc</module>
         <module>task-flow-persistence-mmdb</module>
+        <module>task-flow-grpc</module>
     </modules>
     <packaging>pom</packaging>
 

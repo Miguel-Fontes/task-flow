@@ -11,9 +11,9 @@
 
     <artifactId>task-flow-ports</artifactId>
 
-    <name>Task Flow Ports</name>
+    <name>Task Flow Ports - Persistence</name>
     <url>https://github.com/Miguel-Fontes/task-flow</url>
-    <description>Common port definitions of the Task Flow project</description>
+    <description>Persistence port definition of the Task Flow project</description>
 
     <dependencies>
         <dependency>
