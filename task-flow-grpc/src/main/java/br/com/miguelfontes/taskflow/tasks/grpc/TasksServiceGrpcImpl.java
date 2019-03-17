@@ -5,6 +5,7 @@ import io.grpc.stub.StreamObserver;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -34,13 +35,12 @@ public class TasksServiceGrpcImpl extends TasksServiceGrpc.TasksServiceImplBase 
 
     @Override
     public void create(TasksServiceOuterClass.CreateTaskRequest request, StreamObserver<TasksServiceOuterClass.CreateTaskResponse> responseObserver) {
-        var response = Stream.of(request)
+        var response = Optional.of(request)
                 .map(this::buildCreateTaskRequest)
                 .map(createTask::execute)
                 .map(CreateTaskResponse::getTask)
                 .map(this::toOuterTask)
                 .map(this::buildTaskResponse)
-                .findFirst()
                 .orElseThrow();
 
         responseObserver.onNext(response);
