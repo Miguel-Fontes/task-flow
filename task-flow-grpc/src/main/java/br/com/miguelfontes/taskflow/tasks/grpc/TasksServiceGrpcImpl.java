@@ -46,7 +46,7 @@ public class TasksServiceGrpcImpl extends TasksServiceGrpc.TasksServiceImplBase 
     }
 
     @Override
-    public void list(TasksServiceOuterClass.SearchTasksRequest request, StreamObserver<TasksServiceOuterClass.SearchTasksResponse> responseObserver) {
+    public void search(TasksServiceOuterClass.SearchTasksRequest request, StreamObserver<TasksServiceOuterClass.SearchTasksResponse> responseObserver) {
         var searchTasksRequest = SearchTasksRequest.builder()
                 .title(request.getTitle())
                 .build();

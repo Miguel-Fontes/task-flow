@@ -25,5 +25,5 @@ message SearchTasksResponse {
 
 service TasksService {
     rpc create (CreateTaskRequest) returns (CreateTaskResponse);
-    rpc list (SearchTasksRequest) returns (SearchTasksResponse);
+    rpc search (SearchTasksRequest) returns (SearchTasksResponse);
 }

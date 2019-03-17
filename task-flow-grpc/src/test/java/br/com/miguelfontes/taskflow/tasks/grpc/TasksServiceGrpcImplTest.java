@@ -41,7 +41,7 @@ class TasksServiceGrpcImplTest extends GrpcTest {
         var searchTaskRequest = buildSearchTaskRequest("");
 
 
-        var list = stub.list(searchTaskRequest);
+        var list = stub.search(searchTaskRequest);
 
         assertAll(
                 () -> assertFalse(list.getTasksList().isEmpty()),
