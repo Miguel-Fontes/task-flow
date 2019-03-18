@@ -2,7 +2,7 @@ package br.com.miguelfontes.taskflow.persistence.mmdb;
 
 import br.com.miguelfontes.taskflow.core.tasks.Task;
 import br.com.miguelfontes.taskflow.ports.persistence.TaskRepository;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +16,7 @@ import static java.util.Collections.unmodifiableList;
  *
  * @author Miguel Fontes
  */
-@Service
+@Repository
 public class TaskRepositoryMMDB implements TaskRepository {
 
     private final List<Task> tasks;
