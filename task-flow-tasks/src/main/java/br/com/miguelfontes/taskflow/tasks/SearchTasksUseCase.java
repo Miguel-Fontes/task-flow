@@ -6,6 +6,8 @@ import br.com.miguelfontes.taskflow.ports.tasks.SearchTasks;
 import br.com.miguelfontes.taskflow.ports.tasks.SearchTasksRequest;
 import br.com.miguelfontes.taskflow.ports.tasks.SearchTasksResponse;
 import br.com.miguelfontes.taskflow.tasks.factories.TaskDTOFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
@@ -17,10 +19,12 @@ import static java.util.stream.Collectors.toList;
  *
  * @author Miguel Fontes
  */
+@Service
 public class SearchTasksUseCase implements SearchTasks {
 
     private final TaskRepository repository;
 
+    @Autowired
     private SearchTasksUseCase(TaskRepository repository) {
         this.repository = repository;
     }

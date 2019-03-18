@@ -9,7 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>task-flow-ports</artifactId>
+    <artifactId>task-flow-ports-persistence</artifactId>
 
     <name>Task Flow Ports - Persistence</name>
     <url>https://github.com/Miguel-Fontes/task-flow</url>

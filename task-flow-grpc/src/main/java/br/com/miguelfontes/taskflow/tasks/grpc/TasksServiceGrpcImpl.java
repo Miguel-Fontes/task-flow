@@ -8,6 +8,8 @@ import br.com.miguelfontes.taskflow.ports.tasks.SearchTasksRequest;
 import br.com.miguelfontes.taskflow.ports.tasks.SearchTasksResponse;
 import br.com.miguelfontes.taskflow.ports.tasks.TaskDTO;
 import io.grpc.stub.StreamObserver;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.Collection;
 import java.util.List;
@@ -24,13 +26,15 @@ import static java.util.stream.Collectors.toList;
  *
  * @author Miguel Fontes
  */
+@Service
 public class TasksServiceGrpcImpl extends TasksServiceGrpc.TasksServiceImplBase {
 
     private final CreateTask createTask;
 
     private final SearchTasks searchTasks;
 
-    private TasksServiceGrpcImpl(CreateTask createTask, SearchTasks searchTasks) {
+    @Autowired
+    public TasksServiceGrpcImpl(CreateTask createTask, SearchTasks searchTasks) {
         this.createTask = createTask;
         this.searchTasks = searchTasks;
     }

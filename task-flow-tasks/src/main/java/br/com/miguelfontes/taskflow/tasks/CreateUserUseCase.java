@@ -5,6 +5,7 @@ import br.com.miguelfontes.taskflow.ports.tasks.CreateUser;
 import br.com.miguelfontes.taskflow.ports.tasks.CreateUserRequest;
 import br.com.miguelfontes.taskflow.ports.tasks.CreateUserResponse;
 import br.com.miguelfontes.taskflow.ports.tasks.UserDTO;
+import org.springframework.stereotype.Service;
 
 /**
  * Implements the {@link CreateUser} port, defining the {@link br.com.miguelfontes.taskflow.core.tasks.User} creation
@@ -12,6 +13,7 @@ import br.com.miguelfontes.taskflow.ports.tasks.UserDTO;
  *
  * @author Miguel Fontes
  */
+@Service
 public final class CreateUserUseCase implements CreateUser {
 
     private CreateUserUseCase() {

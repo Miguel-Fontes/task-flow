@@ -10,7 +10,6 @@ message CreateTaskResponse {
     Task task = 1;
 }
 
-
 message SearchTasksRequest {
     string title = 1;
 }

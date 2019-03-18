@@ -6,6 +6,8 @@ import br.com.miguelfontes.taskflow.ports.tasks.CreateTask;
 import br.com.miguelfontes.taskflow.ports.tasks.CreateTaskRequest;
 import br.com.miguelfontes.taskflow.ports.tasks.CreateTaskResponse;
 import br.com.miguelfontes.taskflow.tasks.factories.TaskDTOFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
@@ -15,10 +17,12 @@ import java.util.Optional;
  *
  * @author Miguel Fontes
  */
+@Service
 public final class CreateTaskUseCase implements CreateTask {
 
     private final TaskRepository repository;
 
+    @Autowired
     private CreateTaskUseCase(TaskRepository repository) {
         this.repository = repository;
     }

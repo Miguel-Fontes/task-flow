@@ -67,3 +67,6 @@ target
 dependency-reduced-pom.xml
 
 **/.attach*
+
+sonarlint
+utils.*

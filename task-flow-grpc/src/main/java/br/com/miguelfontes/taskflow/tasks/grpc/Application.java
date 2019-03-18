@@ -1,12 +1,6 @@
 package br.com.miguelfontes.taskflow.tasks.grpc;
 
-import br.com.miguelfontes.taskflow.persistence.mmdb.TaskRepositoryMMDB;
-import br.com.miguelfontes.taskflow.tasks.CreateTaskUseCase;
-import br.com.miguelfontes.taskflow.tasks.SearchTasksUseCase;
-import io.grpc.Server;
-import io.grpc.ServerBuilder;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 import java.io.IOException;
 import java.util.Optional;
@@ -18,22 +12,17 @@ import java.util.Optional;
  */
 public class Application {
 
-    private static Logger logger = LoggerFactory.getLogger(Application.class);
+    private static final String BASE_PACKAGE = "br.com.miguelfontes.taskflow";
 
     public static void main(String[] args) throws IOException, InterruptedException {
+
+        var applicationContext = new AnnotationConfigApplicationContext();
+        applicationContext.scan(BASE_PACKAGE);
+        applicationContext.refresh();
+        var server = applicationContext.getBean(GrpcServer.class);
+
         var port = getPort(args);
-        var taskRepositoryInstance = TaskRepositoryMMDB.instance();
-        Server server = ServerBuilder.forPort(port)
-                .addService(TasksServiceGrpcImpl.instance(
-                        CreateTaskUseCase.instance(taskRepositoryInstance),
-                        SearchTasksUseCase.instance(taskRepositoryInstance)))
-                .build();
-
-        server.start();
-
-        logger.info("Server started on port [{}]!", port);
-
-        server.awaitTermination();
+        server.start(port);
     }
 
     private static Integer getPort(String[] args) {
@@ -47,5 +36,7 @@ public class Application {
                 ? java.util.Optional.ofNullable(args[i])
                 : Optional.empty();
     }
+
+
 }
 
