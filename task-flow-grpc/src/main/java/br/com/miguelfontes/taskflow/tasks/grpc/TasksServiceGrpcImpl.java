@@ -28,9 +28,7 @@ import static java.util.stream.Collectors.toList;
  */
 @Service
 public class TasksServiceGrpcImpl extends TasksServiceGrpc.TasksServiceImplBase {
-
     private final CreateTask createTask;
-
     private final SearchTasks searchTasks;
 
     @Autowired
