@@ -15,12 +15,10 @@ public class Application {
     private static final String BASE_PACKAGE = "br.com.miguelfontes.taskflow";
 
     public static void main(String[] args) throws IOException, InterruptedException {
-
         var applicationContext = new AnnotationConfigApplicationContext();
         applicationContext.scan(BASE_PACKAGE);
         applicationContext.refresh();
         var server = applicationContext.getBean(GrpcServer.class);
-
         var port = getPort(args);
         server.start(port);
     }
