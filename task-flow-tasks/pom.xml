@@ -16,6 +16,17 @@
     <description>Implements the Tasks port of the Task Flow project, granting access the to Tasks bounded context
     </description>
 
+    <build>
+        <plugins>
+            <plugin>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <argLine>--add-opens taskflow.tasks/br.com.miguelfontes.taskflow.tasks=ALL-UNNAMED</argLine>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
     <dependencies>
         <dependency>
             <groupId>br.com.miguelfontes</groupId>

@@ -15,4 +15,16 @@
     <url>https://github.com/Miguel-Fontes/task-flow</url>
     <description>Contains the core domain logic of the Task Flow project</description>
 
+
+    <build>
+        <plugins>
+            <plugin>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <argLine>--add-opens taskflow.core.tasks/br.com.miguelfontes.taskflow.core=ALL-UNNAMED</argLine>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
 </project>
