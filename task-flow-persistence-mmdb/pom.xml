@@ -20,7 +20,7 @@
             <plugin>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <configuration>
-                    <argLine>--add-opens
+                    <argLine>@{argLine} --add-opens
                         taskflow.persistence.mmdb/br.com.miguelfontes.taskflow.persistence.mmdb=ALL-UNNAMED
                     </argLine>
                 </configuration>

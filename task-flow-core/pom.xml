@@ -21,7 +21,8 @@
             <plugin>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <configuration>
-                    <argLine>--add-opens taskflow.core.tasks/br.com.miguelfontes.taskflow.core=ALL-UNNAMED</argLine>
+                    <argLine>@{argLine} --add-opens taskflow.core.tasks/br.com.miguelfontes.taskflow.core=ALL-UNNAMED
+                    </argLine>
                 </configuration>
             </plugin>
         </plugins>
