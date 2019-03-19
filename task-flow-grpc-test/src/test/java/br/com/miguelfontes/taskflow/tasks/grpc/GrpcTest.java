@@ -13,7 +13,7 @@ import org.junit.jupiter.api.BeforeAll;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
-class GrpcTest {
+abstract class GrpcTest {
     static TasksServiceGrpc.TasksServiceBlockingStub stub;
     private static Server server;
     private static ManagedChannel channel;

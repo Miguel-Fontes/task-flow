@@ -13,6 +13,8 @@
         <module>task-flow-tasks</module>
         <module>task-flow-persistence-mmdb</module>
         <module>task-flow-grpc</module>
+        <module>task-flow-grpc-dist</module>
+        <module>task-flow-grpc-test</module>
     </modules>
     <packaging>pom</packaging>
 

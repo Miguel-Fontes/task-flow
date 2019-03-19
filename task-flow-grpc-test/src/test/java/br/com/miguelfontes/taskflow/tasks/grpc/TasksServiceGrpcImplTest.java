@@ -1,6 +1,7 @@
 package br.com.miguelfontes.taskflow.tasks.grpc;
 
 import io.grpc.StatusRuntimeException;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -24,9 +25,9 @@ class TasksServiceGrpcImplTest extends GrpcTest {
         var response = stub.create(request).getTask();
 
         assertAll(
-                () -> assertEquals(TASK_TITLE, response.getTitle()),
+                () -> Assertions.assertEquals(TASK_TITLE, response.getTitle()),
                 () -> assertNotNull(response.getId()),
-                () -> assertEquals(USER_ID, response.getAuthor()),
+                () -> Assertions.assertEquals(USER_ID, response.getAuthor()),
                 () -> assertNotNull(response.getCreatedAt()),
                 () -> assertNotNull(response.getUpdatedAt()),
                 () -> assertNotNull(response.getStatus())
@@ -44,8 +45,8 @@ class TasksServiceGrpcImplTest extends GrpcTest {
         var list = stub.search(searchTaskRequest);
 
         assertAll(
-                () -> assertFalse(list.getTasksList().isEmpty()),
-                () -> assertTrue(list.getTasksList().contains(createTaskResponse))
+                () -> Assertions.assertFalse(list.getTasksList().isEmpty()),
+                () -> Assertions.assertTrue(list.getTasksList().contains(createTaskResponse))
         );
     }
 

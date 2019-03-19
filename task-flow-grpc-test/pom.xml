@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
         <artifactId>task-flow</artifactId>
@@ -9,11 +9,11 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>task-flow-grpc</artifactId>
+    <artifactId>task-flow-grpc-test</artifactId>
 
-    <name>Task Flow gRPC</name>
+    <name>task-flow-grpc-test</name>
     <url>https://github.com/Miguel-Fontes/task-flow</url>
-    <description>A runtime that uses gRPC to expose a public API</description>
+    <description>A integration testing module for a gRPC based distribution</description>
 
     <properties>
         <grpc.version>1.19.0</grpc.version>
@@ -51,48 +51,24 @@
 
     <dependencies>
         <dependency>
-            <groupId>io.grpc</groupId>
-            <artifactId>grpc-netty</artifactId>
-            <version>${grpc.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>io.grpc</groupId>
-            <artifactId>grpc-protobuf</artifactId>
-            <version>${grpc.version}</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>com.google.protobuf</groupId>
-                    <artifactId>protobuf-java</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        <dependency>
-            <groupId>com.google.protobuf</groupId>
-            <artifactId>protobuf-java</artifactId>
-            <version>3.7.0</version>
-        </dependency>
-        <dependency>
-            <groupId>io.grpc</groupId>
-            <artifactId>grpc-stub</artifactId>
-            <version>${grpc.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>io.grpc</groupId>
-            <artifactId>grpc-testing</artifactId>
-            <version>${grpc.version}</version>
+            <groupId>br.com.miguelfontes</groupId>
+            <artifactId>task-flow-grpc</artifactId>
+            <version>${project.parent.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>javax.annotation</groupId>
-            <artifactId>javax.annotation-api</artifactId>
-            <version>${javax.annotation-api.version}</version>
-            <scope>provided</scope>
+            <groupId>br.com.miguelfontes</groupId>
+            <artifactId>task-flow-persistence-mmdb</artifactId>
+            <version>${project.parent.version}</version>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>br.com.miguelfontes</groupId>
-            <artifactId>task-flow-ports-tasks</artifactId>
+            <artifactId>task-flow-tasks</artifactId>
             <version>${project.parent.version}</version>
+            <scope>test</scope>
         </dependency>
     </dependencies>
+
 
 </project>

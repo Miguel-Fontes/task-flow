@@ -7,9 +7,11 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="task-flow-cli" />
+        <module name="task-flow-grpc-test" />
         <module name="task-flow-ports-tasks" />
-        <module name="task-flow-persistence-mmdb" />
         <module name="task-flow-grpc" />
+        <module name="task-flow-grpc-dist" />
+        <module name="task-flow-persistence-mmdb" />
         <module name="task-flow-tasks" />
         <module name="task-flow-core" />
         <module name="task-flow-ports-persistence" />
@@ -20,6 +22,8 @@
       <module name="task-flow-cli" target="1.11" />
       <module name="task-flow-core" target="11" />
       <module name="task-flow-grpc" target="11" />
+      <module name="task-flow-grpc-dist" target="11" />
+      <module name="task-flow-grpc-test" target="11" />
       <module name="task-flow-persistence-mmdb" target="11" />
       <module name="task-flow-ports-persistence" target="11" />
       <module name="task-flow-ports-tasks" target="11" />

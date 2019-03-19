@@ -4,6 +4,8 @@
     <file url="file://$PROJECT_DIR$" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/task-flow-core" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/task-flow-grpc" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/task-flow-grpc-dist" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/task-flow-grpc-test" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/task-flow-persistence-mmdb" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/task-flow-ports-persistence" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/task-flow-ports-tasks" charset="UTF-8" />
