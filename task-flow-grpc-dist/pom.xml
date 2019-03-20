@@ -11,7 +11,7 @@
 
     <artifactId>task-flow-grpc-dist</artifactId>
 
-    <name>task-flow-grpc-dist</name>
+    <name>Task Flow gRPC Distribution</name>
     <url>https://github.com/Miguel-Fontes/task-flow</url>
     <description>Assembles and and builds a gRPC based distribution of the Task Flow project</description>
 

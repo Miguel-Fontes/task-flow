@@ -11,7 +11,7 @@
 
     <artifactId>task-flow-grpc-test</artifactId>
 
-    <name>task-flow-grpc-test</name>
+    <name>Task Flow gRPC Test</name>
     <url>https://github.com/Miguel-Fontes/task-flow</url>
     <description>A integration testing module for a gRPC based distribution</description>
 
