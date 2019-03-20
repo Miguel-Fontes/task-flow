@@ -7,6 +7,7 @@ import br.com.miguelfontes.taskflow.ports.persistence.TaskRepository;
 import br.com.miguelfontes.taskflow.ports.tasks.SearchTasksRequest;
 import br.com.miguelfontes.taskflow.ports.tasks.SearchTasksResponse;
 import br.com.miguelfontes.taskflow.ports.tasks.TaskDTO;
+import br.com.miguelfontes.taskflow.ports.tasks.TasksAPI;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -16,11 +17,11 @@ import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@DisplayName("search task use case")
-class SearchTasksUseCaseTest {
+@DisplayName("search task")
+class SearchTasksTest {
 
     private final TaskRepository repository = StubTaskRepository.instance();
-    private final SearchTasksUseCase useCase = SearchTasksUseCase.instance(repository);
+    private final TasksAPI service = TasksService.instance(repository);
 
     private final SearchTasksRequest NO_CRITERIA_SEARCH_REQUEST = SearchTasksRequest.builder().build();
     private final String USER_NAME = "User name";
@@ -29,7 +30,7 @@ class SearchTasksUseCaseTest {
     @Test
     @DisplayName("should return empty list when no task is found")
     void shouldReturnAEmptyListWhenNoTaskIsFound() {
-        var response = useCase.execute(NO_CRITERIA_SEARCH_REQUEST);
+        var response = service.execute(NO_CRITERIA_SEARCH_REQUEST);
 
         assertTrue(response.getTasks().isEmpty());
     }
@@ -40,7 +41,7 @@ class SearchTasksUseCaseTest {
         var author = User.newInstance(USER_NAME);
         var task = repository.save(Task.newInstance(author, TASK_TITLE));
 
-        var foundTasks = useCase.execute(NO_CRITERIA_SEARCH_REQUEST);
+        var foundTasks = service.execute(NO_CRITERIA_SEARCH_REQUEST);
 
         assertAll(
                 () -> assertFalse(foundTasks.getTasks().isEmpty()),

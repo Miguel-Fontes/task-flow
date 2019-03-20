@@ -3,6 +3,7 @@ package br.com.miguelfontes.taskflow.tasks;
 import br.com.miguelfontes.taskflow.ports.persistence.TaskRepository;
 import br.com.miguelfontes.taskflow.ports.tasks.CreateTaskRequest;
 import br.com.miguelfontes.taskflow.ports.tasks.CreateTaskResponse;
+import br.com.miguelfontes.taskflow.ports.tasks.DeleteTaskRequest;
 import br.com.miguelfontes.taskflow.ports.tasks.SearchTasksRequest;
 import br.com.miguelfontes.taskflow.ports.tasks.SearchTasksResponse;
 import br.com.miguelfontes.taskflow.ports.tasks.TasksAPI;
@@ -36,5 +37,10 @@ public class TasksService implements TasksAPI {
     @Override
     public SearchTasksResponse execute(SearchTasksRequest request) {
         return SearchTasksUseCase.instance(repository).execute(request);
+    }
+
+    @Override
+    public void execute(DeleteTaskRequest request) {
+        throw new UnsupportedOperationException();
     }
 }

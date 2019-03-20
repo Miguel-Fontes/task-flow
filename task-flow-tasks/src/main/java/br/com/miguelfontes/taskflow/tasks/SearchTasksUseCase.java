@@ -16,7 +16,7 @@ import static java.util.stream.Collectors.toList;
  *
  * @author Miguel Fontes
  */
-public class SearchTasksUseCase {
+class SearchTasksUseCase {
 
     private final TaskRepository repository;
 
