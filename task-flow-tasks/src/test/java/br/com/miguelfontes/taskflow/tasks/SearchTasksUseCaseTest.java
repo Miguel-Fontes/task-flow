@@ -4,7 +4,6 @@ import br.com.miguelfontes.taskflow.core.tasks.Task;
 import br.com.miguelfontes.taskflow.core.tasks.User;
 import br.com.miguelfontes.taskflow.persistence.StubTaskRepository;
 import br.com.miguelfontes.taskflow.ports.persistence.TaskRepository;
-import br.com.miguelfontes.taskflow.ports.tasks.SearchTasks;
 import br.com.miguelfontes.taskflow.ports.tasks.SearchTasksRequest;
 import br.com.miguelfontes.taskflow.ports.tasks.SearchTasksResponse;
 import br.com.miguelfontes.taskflow.ports.tasks.TaskDTO;
@@ -21,7 +20,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class SearchTasksUseCaseTest {
 
     private final TaskRepository repository = StubTaskRepository.instance();
-    private final SearchTasks useCase = SearchTasksUseCase.instance(repository);
+    private final SearchTasksUseCase useCase = SearchTasksUseCase.instance(repository);
 
     private final SearchTasksRequest NO_CRITERIA_SEARCH_REQUEST = SearchTasksRequest.builder().build();
     private final String USER_NAME = "User name";

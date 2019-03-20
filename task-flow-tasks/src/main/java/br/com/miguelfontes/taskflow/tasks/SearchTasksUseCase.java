@@ -2,39 +2,34 @@ package br.com.miguelfontes.taskflow.tasks;
 
 import br.com.miguelfontes.taskflow.core.tasks.Task;
 import br.com.miguelfontes.taskflow.ports.persistence.TaskRepository;
-import br.com.miguelfontes.taskflow.ports.tasks.SearchTasks;
 import br.com.miguelfontes.taskflow.ports.tasks.SearchTasksRequest;
 import br.com.miguelfontes.taskflow.ports.tasks.SearchTasksResponse;
 import br.com.miguelfontes.taskflow.tasks.factories.TaskDTOFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 import static java.util.stream.Collectors.toList;
 
 /**
- * Implements the {@link SearchTasks} operation, searching for a collection of {@link br.com.miguelfontes.taskflow.core.tasks.Task}
+ * Implements the SearchTasks operation, searching for a collection of {@link br.com.miguelfontes.taskflow.core.tasks.Task}
  * with the given criteria.
  *
  * @author Miguel Fontes
  */
-@Service
-public class SearchTasksUseCase implements SearchTasks {
+public class SearchTasksUseCase {
 
     private final TaskRepository repository;
 
-    @Autowired
     private SearchTasksUseCase(TaskRepository repository) {
         this.repository = repository;
     }
 
-    public static SearchTasks instance(TaskRepository repository) {
+    public static SearchTasksUseCase instance(TaskRepository repository) {
         return new SearchTasksUseCase(repository);
     }
 
-    @Override
-    public SearchTasksResponse execute(SearchTasksRequest request) {
+    @SuppressWarnings("unused")
+    SearchTasksResponse execute(SearchTasksRequest request) {
         return responseFrom(repository.findAll());
     }
 

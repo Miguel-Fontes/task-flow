@@ -2,27 +2,22 @@ package br.com.miguelfontes.taskflow.tasks;
 
 import br.com.miguelfontes.taskflow.core.tasks.User;
 import br.com.miguelfontes.taskflow.ports.persistence.TaskRepository;
-import br.com.miguelfontes.taskflow.ports.tasks.CreateTask;
 import br.com.miguelfontes.taskflow.ports.tasks.CreateTaskRequest;
 import br.com.miguelfontes.taskflow.ports.tasks.CreateTaskResponse;
 import br.com.miguelfontes.taskflow.tasks.factories.TaskDTOFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
 /**
- * Implements the {@link CreateTask} port, defining the {@link br.com.miguelfontes.taskflow.core.tasks.Task} creation
+ * Implements the CreateTask port, defining the {@link br.com.miguelfontes.taskflow.core.tasks.Task} creation
  * operation
  *
  * @author Miguel Fontes
  */
-@Service
-public final class CreateTaskUseCase implements CreateTask {
+public final class CreateTaskUseCase {
 
     private final TaskRepository repository;
 
-    @Autowired
     private CreateTaskUseCase(TaskRepository repository) {
         this.repository = repository;
     }
@@ -31,8 +26,7 @@ public final class CreateTaskUseCase implements CreateTask {
         return new CreateTaskUseCase(repository);
     }
 
-    @Override
-    public CreateTaskResponse execute(CreateTaskRequest request) {
+    CreateTaskResponse execute(CreateTaskRequest request) {
         return Optional.of(getUserById(request))
                 .map(user -> user.createTask(request.getTitle()))
                 .map(repository::save)

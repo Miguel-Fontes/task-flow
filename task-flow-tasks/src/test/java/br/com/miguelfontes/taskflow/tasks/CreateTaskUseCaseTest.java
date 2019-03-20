@@ -3,7 +3,6 @@ package br.com.miguelfontes.taskflow.tasks;
 import br.com.miguelfontes.taskflow.core.tasks.TaskStatus;
 import br.com.miguelfontes.taskflow.persistence.StubTaskRepository;
 import br.com.miguelfontes.taskflow.ports.persistence.TaskRepository;
-import br.com.miguelfontes.taskflow.ports.tasks.CreateTask;
 import br.com.miguelfontes.taskflow.ports.tasks.CreateTaskRequest;
 import br.com.miguelfontes.taskflow.ports.tasks.TaskDTO;
 import org.junit.jupiter.api.DisplayName;
@@ -22,7 +21,7 @@ class CreateTaskUseCaseTest {
     private static final String TASK_TITLE = "A task title!";
 
     private final TaskRepository repository = StubTaskRepository.instance();
-    private final CreateTask useCase = CreateTaskUseCase.instance(repository);
+    private final CreateTaskUseCase useCase = CreateTaskUseCase.instance(repository);
 
     @Test
     @DisplayName("should create a new task")

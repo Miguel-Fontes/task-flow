@@ -1,12 +1,11 @@
 package br.com.miguelfontes.taskflow.tasks.grpc;
 
-import br.com.miguelfontes.taskflow.ports.tasks.CreateTask;
 import br.com.miguelfontes.taskflow.ports.tasks.CreateTaskRequest;
 import br.com.miguelfontes.taskflow.ports.tasks.CreateTaskResponse;
-import br.com.miguelfontes.taskflow.ports.tasks.SearchTasks;
 import br.com.miguelfontes.taskflow.ports.tasks.SearchTasksRequest;
 import br.com.miguelfontes.taskflow.ports.tasks.SearchTasksResponse;
 import br.com.miguelfontes.taskflow.ports.tasks.TaskDTO;
+import br.com.miguelfontes.taskflow.ports.tasks.TasksAPI;
 import io.grpc.stub.StreamObserver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,24 +27,22 @@ import static java.util.stream.Collectors.toList;
  */
 @Service
 public class TasksServiceGrpcImpl extends TasksServiceGrpc.TasksServiceImplBase {
-    private final CreateTask createTask;
-    private final SearchTasks searchTasks;
+    private final TasksAPI api;
 
     @Autowired
-    public TasksServiceGrpcImpl(CreateTask createTask, SearchTasks searchTasks) {
-        this.createTask = createTask;
-        this.searchTasks = searchTasks;
+    public TasksServiceGrpcImpl(TasksAPI api) {
+        this.api = api;
     }
 
-    static TasksServiceGrpc.TasksServiceImplBase instance(CreateTask createTask, SearchTasks searchTasks) {
-        return new TasksServiceGrpcImpl(createTask, searchTasks);
+    static TasksServiceGrpc.TasksServiceImplBase instance(TasksAPI api) {
+        return new TasksServiceGrpcImpl(api);
     }
 
     @Override
     public void create(TasksServiceOuterClass.CreateTaskRequest request, StreamObserver<TasksServiceOuterClass.CreateTaskResponse> responseObserver) {
         var response = Optional.of(request)
                 .map(this::buildCreateTaskRequest)
-                .map(createTask::execute)
+                .map(api::execute)
                 .map(CreateTaskResponse::getTask)
                 .map(this::toOuterTask)
                 .map(this::buildTaskResponse)
@@ -80,7 +77,7 @@ public class TasksServiceGrpcImpl extends TasksServiceGrpc.TasksServiceImplBase 
     public void search(TasksServiceOuterClass.SearchTasksRequest request, StreamObserver<TasksServiceOuterClass.SearchTasksResponse> responseObserver) {
         var response = Stream.of(request)
                 .map(this::buildSearchTaskRequest)
-                .map(searchTasks::execute)
+                .map(api::execute)
                 .map(SearchTasksResponse::getTasks)
                 .flatMap(Collection::stream)
                 .map(this::toOuterTask)
