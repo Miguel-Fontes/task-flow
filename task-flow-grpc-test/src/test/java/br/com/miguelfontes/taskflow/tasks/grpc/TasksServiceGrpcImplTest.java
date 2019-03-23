@@ -4,7 +4,6 @@ import io.grpc.StatusRuntimeException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestReporter;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
@@ -94,10 +93,9 @@ class TasksServiceGrpcImplTest extends GrpcTest {
 
     @Test
     @DisplayName("should return empty list when no task is found")
-    void shouldReturnAEmptyListWhenNoTaskIsFound(TestReporter reporter) {
+    void shouldReturnAEmptyListWhenNoTaskIsFound() {
         final var tasks = stub.search(buildSearchTaskRequest("random title to search for"));
 
-        reporter.publishEntry("Found tasks", tasks.getTasksList().toString());
         assertTrue(tasks.getTasksList().isEmpty());
     }
 
