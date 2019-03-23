@@ -36,11 +36,36 @@ class UpdateTaskTest {
                 () -> assertEquals(task.getId(), response.getId()),
                 () -> assertEquals(task.getStatus().toString(), response.getStatus()),
                 () -> assertEquals(task.getCreatedAt(), response.getCreatedAt()),
-                () -> assertNotEquals(task.getTitle(), response.getTitle())
+                () -> assertNotEquals(task.getTitle(), response.getTitle()),
+                () -> assertEquals(newTitle, response.getTitle())
         );
     }
 
     private UpdateTaskRequest buildUpdateTaskTitleRequest(Task task, String title) {
         return UpdateTaskRequest.of(task.getId(), title, task.getDescription(), task.getStatus().toString(), task.getAuthor().getId());
+    }
+
+    @Test
+    @DisplayName("should update a task description")
+    void shouldUpdateATaskDescription() {
+        final String newDescription = "a new description";
+        Task task = repository.save(TASK);
+
+        var request = buildUpdateTaskDescriptionRequest(task, newDescription);
+
+        TaskDTO response = service.execute(request).getTask();
+
+        assertAll(
+                () -> assertEquals(task.getId(), response.getId()),
+                () -> assertEquals(task.getTitle(), response.getTitle()),
+                () -> assertEquals(task.getStatus().toString(), response.getStatus()),
+                () -> assertEquals(task.getCreatedAt(), response.getCreatedAt()),
+                () -> assertNotEquals(task.getDescription(), response.getDescription()),
+                () -> assertEquals(newDescription, response.getDescription())
+        );
+    }
+
+    private UpdateTaskRequest buildUpdateTaskDescriptionRequest(Task task, String newDescription) {
+        return UpdateTaskRequest.of(task.getId(), task.getTitle(), newDescription, task.getStatus().toString(), task.getAuthor().getId());
     }
 }
