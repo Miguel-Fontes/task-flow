@@ -110,39 +110,6 @@ class TaskTest {
                 );
 
             }
-
-            @Test
-            @DisplayName("with a new status")
-            void withANewStatus() {
-                TaskStatus status = TaskStatus.TODO;
-                Task updatedTask = task.withStatus(status);
-
-                assertAll(
-                        () -> assertEquals(task.getId(), updatedTask.getId()),
-                        () -> assertEquals(task.getTitle(), updatedTask.getTitle()),
-                        () -> assertEquals(task.getAuthor(), updatedTask.getAuthor()),
-                        () -> assertEquals(task.getCreatedAt(), updatedTask.getCreatedAt()),
-                        () -> assertNotEquals(task.getStatus(), updatedTask.getStatus()),
-                        () -> assertNotEquals(task.getUpdatedAt(), updatedTask.getUpdatedAt())
-                );
-            }
-
-            @Test
-            @DisplayName("with a new author")
-            void withANewAuthor() {
-                User newAuthor = User.newInstance("new author");
-                Task updatedTask = task.withAuthor(newAuthor);
-
-                assertAll(
-                        () -> assertEquals(task.getId(), updatedTask.getId()),
-                        () -> assertEquals(task.getTitle(), updatedTask.getTitle()),
-                        () -> assertEquals(task.getStatus(), updatedTask.getStatus()),
-                        () -> assertEquals(task.getCreatedAt(), updatedTask.getCreatedAt()),
-                        () -> assertNotEquals(task.getAuthor(), updatedTask.getAuthor()),
-                        () -> assertNotEquals(task.getUpdatedAt(), updatedTask.getUpdatedAt())
-                );
-            }
         }
-
     }
 }

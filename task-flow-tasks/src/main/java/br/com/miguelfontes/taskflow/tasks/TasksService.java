@@ -7,6 +7,8 @@ import br.com.miguelfontes.taskflow.ports.tasks.DeleteTaskRequest;
 import br.com.miguelfontes.taskflow.ports.tasks.SearchTasksRequest;
 import br.com.miguelfontes.taskflow.ports.tasks.SearchTasksResponse;
 import br.com.miguelfontes.taskflow.ports.tasks.TasksAPI;
+import br.com.miguelfontes.taskflow.ports.tasks.UpdateTaskRequest;
+import br.com.miguelfontes.taskflow.ports.tasks.UpdateTaskResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -42,5 +44,10 @@ public class TasksService implements TasksAPI {
     @Override
     public void execute(DeleteTaskRequest request) {
         repository.delete(request.getId());
+    }
+
+    @Override
+    public UpdateTaskResponse execute(UpdateTaskRequest request) {
+        return UpdateTaskUseCase.instance(repository).execute(request);
     }
 }

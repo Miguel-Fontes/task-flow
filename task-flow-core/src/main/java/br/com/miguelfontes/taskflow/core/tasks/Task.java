@@ -47,14 +47,6 @@ public final class Task {
         return new Task(id, title, createdAt, LocalDateTime.now(), status, author);
     }
 
-    public Task withStatus(TaskStatus status) {
-        return new Task(id, title, createdAt, LocalDateTime.now(), status, author);
-    }
-
-    public Task withAuthor(User author) {
-        return new Task(id, title, createdAt, LocalDateTime.now(), status, author);
-    }
-
     public UUID getId() {
         return id;
     }
