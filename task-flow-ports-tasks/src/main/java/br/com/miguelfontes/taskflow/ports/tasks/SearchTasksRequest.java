@@ -1,5 +1,6 @@
 package br.com.miguelfontes.taskflow.ports.tasks;
 
+import java.util.Objects;
 import java.util.Optional;
 
 /**
@@ -10,6 +11,8 @@ import java.util.Optional;
 public class SearchTasksRequest {
     private final String title;
 
+    public static final SearchTasksRequest ALL = SearchTasksRequest.builder().build();
+
     private SearchTasksRequest(String title) {
         this.title = title;
     }
@@ -19,7 +22,13 @@ public class SearchTasksRequest {
     }
 
     public Optional<String> getTitle() {
-        return Optional.ofNullable(title);
+        return Objects.isNull(title) || isBlankString(title)
+                ? Optional.empty()
+                : Optional.of(title);
+    }
+
+    private boolean isBlankString(String title) {
+        return "".equalsIgnoreCase(title.trim());
     }
 
     /**

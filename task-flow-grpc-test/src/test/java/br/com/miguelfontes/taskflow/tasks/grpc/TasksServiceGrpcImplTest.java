@@ -4,6 +4,7 @@ import io.grpc.StatusRuntimeException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestReporter;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
@@ -39,8 +40,7 @@ class TasksServiceGrpcImplTest extends GrpcTest {
     void shouldCreateAndRetrieveAPersistedTask() {
         var createTaskRequest = buildCreateTaskRequest(USER_ID, TASK_TITLE);
         var createTaskResponse = stub.create(createTaskRequest).getTask();
-        var searchTaskRequest = buildSearchTaskRequest("");
-
+        var searchTaskRequest = buildSearchTaskRequest(TASK_TITLE);
 
         var list = stub.search(searchTaskRequest);
 
@@ -54,7 +54,6 @@ class TasksServiceGrpcImplTest extends GrpcTest {
         return TasksServiceOuterClass.SearchTasksRequest.newBuilder()
                 .setTitle(title)
                 .build();
-
     }
 
     @Test
@@ -81,5 +80,43 @@ class TasksServiceGrpcImplTest extends GrpcTest {
                 .setUserId(userId)
                 .setTitle(taskTitle)
                 .build();
+    }
+
+    @Test
+    @DisplayName("shouldRetrieveAllTasks")
+    void shouldRetrieveAllTasks() {
+        stub.create(buildCreateTaskRequest(USER_ID, TASK_TITLE));
+
+        final var tasks = stub.search(buildNoCriteriaSearchTasksRequest());
+
+        assertFalse(tasks.getTasksList().isEmpty());
+    }
+
+    @Test
+    @DisplayName("should return empty list when no task is found")
+    void shouldReturnAEmptyListWhenNoTaskIsFound(TestReporter reporter) {
+        final var tasks = stub.search(buildSearchTaskRequest("random title to search for"));
+
+        reporter.publishEntry("Found tasks", tasks.getTasksList().toString());
+        assertTrue(tasks.getTasksList().isEmpty());
+    }
+
+    private TasksServiceOuterClass.SearchTasksRequest buildNoCriteriaSearchTasksRequest() {
+        return TasksServiceOuterClass.SearchTasksRequest.newBuilder().build();
+    }
+
+    @Test
+    @DisplayName("should delete a task if it exists")
+    void shouldDeleteATask() {
+        var task = stub.create(buildCreateTaskRequest(USER_ID, TASK_TITLE)).getTask();
+
+        stub.delete(buildDeleteTaskRequest(task));
+        final var tasks = stub.search(buildNoCriteriaSearchTasksRequest());
+
+        assertTrue(tasks.getTasksList().isEmpty());
+    }
+
+    private TasksServiceOuterClass.DeleteTaskRequest buildDeleteTaskRequest(TasksServiceOuterClass.Task task) {
+        return TasksServiceOuterClass.DeleteTaskRequest.newBuilder().setUuid(task.getId()).build();
     }
 }

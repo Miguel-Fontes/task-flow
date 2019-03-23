@@ -102,4 +102,8 @@ public class TasksServiceGrpcImpl extends TasksServiceGrpc.TasksServiceImplBase 
                 .build();
     }
 
+    @Override
+    public void delete(TasksServiceOuterClass.DeleteTaskRequest request, StreamObserver<TasksServiceOuterClass.DeleteTaskResponse> responseObserver) {
+        super.delete(request, responseObserver);
+    }
 }

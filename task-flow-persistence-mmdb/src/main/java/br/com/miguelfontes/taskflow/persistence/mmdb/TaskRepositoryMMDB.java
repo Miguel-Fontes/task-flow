@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 import static java.util.Collections.unmodifiableList;
 
@@ -50,5 +51,12 @@ public class TaskRepositoryMMDB implements TaskRepository {
     @Override
     public void delete(UUID id) {
         tasks.removeIf(task -> id.equals(task.getId()));
+    }
+
+    @Override
+    public List<Task> findByTitle(String title) {
+        return tasks.stream()
+                .filter(task -> title.equalsIgnoreCase(task.getTitle()))
+                .collect(Collectors.toList());
     }
 }

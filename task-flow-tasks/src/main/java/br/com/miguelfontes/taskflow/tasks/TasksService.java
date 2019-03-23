@@ -41,6 +41,6 @@ public class TasksService implements TasksAPI {
 
     @Override
     public void execute(DeleteTaskRequest request) {
-        throw new UnsupportedOperationException();
+        repository.delete(request.getId());
     }
 }

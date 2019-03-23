@@ -28,9 +28,12 @@ class SearchTasksUseCase {
         return new SearchTasksUseCase(repository);
     }
 
-    @SuppressWarnings("unused")
     SearchTasksResponse execute(SearchTasksRequest request) {
-        return responseFrom(repository.findAll());
+        var tasks = request.getTitle()
+                .map(repository::findByTitle)
+                .orElseGet(repository::findAll);
+
+        return responseFrom(tasks);
     }
 
     private SearchTasksResponse responseFrom(List<Task> tasks) {

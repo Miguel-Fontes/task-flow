@@ -34,4 +34,11 @@ public interface TaskRepository {
      */
     void delete(UUID id);
 
+    /**
+     * Search Tasks by it's title.
+     *
+     * @param title the title to be searched for
+     * @return a list of Tasks with titles that matches the one given as parameter
+     */
+    List<Task> findByTitle(String title);
 }
