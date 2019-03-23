@@ -1,6 +1,8 @@
 package br.com.miguelfontes.taskflow.tasks;
 
 import br.com.miguelfontes.taskflow.ports.persistence.TaskRepository;
+import br.com.miguelfontes.taskflow.ports.tasks.ConcludeTaskRequest;
+import br.com.miguelfontes.taskflow.ports.tasks.ConcludeTaskResponse;
 import br.com.miguelfontes.taskflow.ports.tasks.CreateTaskRequest;
 import br.com.miguelfontes.taskflow.ports.tasks.CreateTaskResponse;
 import br.com.miguelfontes.taskflow.ports.tasks.DeleteTaskRequest;
@@ -49,5 +51,10 @@ public class TasksService implements TasksAPI {
     @Override
     public UpdateTaskResponse execute(UpdateTaskRequest request) {
         return UpdateTaskUseCase.instance(repository).execute(request);
+    }
+
+    @Override
+    public ConcludeTaskResponse execute(ConcludeTaskRequest request) {
+        return ConcludeTaskUseCase.instance(repository).execute(request);
     }
 }
