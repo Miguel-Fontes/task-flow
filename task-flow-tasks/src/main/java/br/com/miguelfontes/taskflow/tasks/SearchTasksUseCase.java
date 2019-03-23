@@ -6,8 +6,11 @@ import br.com.miguelfontes.taskflow.ports.tasks.SearchTasksRequest;
 import br.com.miguelfontes.taskflow.ports.tasks.SearchTasksResponse;
 import br.com.miguelfontes.taskflow.tasks.factories.TaskDTOFactory;
 
+import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
+import static java.util.Collections.emptyList;
 import static java.util.stream.Collectors.toList;
 
 /**
@@ -29,11 +32,33 @@ class SearchTasksUseCase {
     }
 
     SearchTasksResponse execute(SearchTasksRequest request) {
-        var tasks = request.getTitle()
-                .map(repository::findByTitle)
-                .orElseGet(repository::findAll);
+        return responseFrom(findById(request)
+                .or(() -> findByTitle(request))
+                .or(() -> findAll(request))
+                .orElse(emptyList()));
+    }
 
-        return responseFrom(tasks);
+    private Optional<List<Task>> findById(SearchTasksRequest request) {
+        return request.getId()
+                .map(repository::findById)
+                .filter(Optional::isPresent)
+                .map(Optional::get)
+                .map(Collections::singletonList);
+    }
+
+    private Optional<List<Task>> findByTitle(SearchTasksRequest request) {
+        return request.getTitle()
+                .map(repository::findByTitle);
+    }
+
+    private Optional<List<Task>> findAll(SearchTasksRequest request) {
+        return hasNoSearchCriteria(request)
+                ? Optional.of(repository.findAll())
+                : Optional.empty();
+    }
+
+    private boolean hasNoSearchCriteria(SearchTasksRequest request) {
+        return request.getTitle().isEmpty() && request.getId().isEmpty();
     }
 
     private SearchTasksResponse responseFrom(List<Task> tasks) {

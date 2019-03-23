@@ -10,7 +10,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@DisplayName("create user use case")
+@DisplayName("create user")
 class CreateUserUseCaseTest {
 
     private CreateUser useCase = CreateUserUseCase.instance();

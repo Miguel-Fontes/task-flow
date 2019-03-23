@@ -9,6 +9,7 @@ import br.com.miguelfontes.taskflow.ports.tasks.SearchTasksResponse;
 import br.com.miguelfontes.taskflow.ports.tasks.TaskDTO;
 import br.com.miguelfontes.taskflow.ports.tasks.TasksAPI;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
@@ -47,40 +48,88 @@ class SearchTasksTest {
     }
 
     private List<UUID> filterFoundTasksBy(Task task, SearchTasksResponse foundTasks) {
-        return foundTasks.getTasks().stream().map(TaskDTO::getId).filter(uuid -> task.getId().equals(uuid)).collect(Collectors.toList());
+        return foundTasks.getTasks()
+                .stream()
+                .map(TaskDTO::getId)
+                .filter(uuid -> task.getId().equals(uuid))
+                .collect(Collectors.toList());
     }
 
-    @Test
-    @DisplayName("should search a task by title")
-    void shouldSearchATaskByTitle() {
-        var author = User.newInstance(USER_NAME);
-        var task = repository.save(Task.newInstance(author, TASK_TITLE));
+    @Nested
+    @DisplayName("search by title")
+    class SearchByTitle {
 
-        var foundTasks = service.execute(buildSearchByTitleRequest(TASK_TITLE));
+        @Test
+        @DisplayName("should search a task by title")
+        void shouldSearchATaskByTitle() {
+            var author = User.newInstance(USER_NAME);
+            var task = repository.save(Task.newInstance(author, TASK_TITLE));
 
-        assertAll(
-                () -> assertFalse(foundTasks.getTasks().isEmpty()),
-                () -> assertFalse(filterFoundTasksBy(task, foundTasks).isEmpty())
-        );
+            var foundTasks = service.execute(buildSearchByTitleRequest(TASK_TITLE));
+
+            assertAll(
+                    () -> assertFalse(foundTasks.getTasks().isEmpty()),
+                    () -> assertFalse(filterFoundTasksBy(task, foundTasks).isEmpty())
+            );
+        }
+
+        @Test
+        @DisplayName("should return a empty list when no title is matched")
+        void shouldReturnAEmptyListWhenNoTitleIsMatched() {
+            var author = User.newInstance(USER_NAME);
+            var task = repository.save(Task.newInstance(author, TASK_TITLE));
+
+            var foundTasks = service.execute(buildSearchByTitleRequest("this title does not match any task"));
+
+            assertAll(
+                    () -> assertTrue(foundTasks.getTasks().isEmpty()),
+                    () -> assertTrue(filterFoundTasksBy(task, foundTasks).isEmpty())
+            );
+        }
+
+        private SearchTasksRequest buildSearchByTitleRequest(String title) {
+            return SearchTasksRequest.builder()
+                    .title(title)
+                    .build();
+        }
     }
 
-    @Test
-    @DisplayName("should returna empty list when no title is matched")
-    void shouldReturnAEmptyListWhenNoTitleIsMatched() {
-        var author = User.newInstance(USER_NAME);
-        var task = repository.save(Task.newInstance(author, TASK_TITLE));
+    @Nested
+    @DisplayName("search by id")
+    class SearchById {
 
-        var foundTasks = service.execute(buildSearchByTitleRequest("this title does not match any task"));
+        @Test
+        @DisplayName("should search a task by id")
+        void shouldSearchATaskById() {
+            var author = User.newInstance(USER_NAME);
+            var task = repository.save(Task.newInstance(author, TASK_TITLE));
 
-        assertAll(
-                () -> assertTrue(foundTasks.getTasks().isEmpty()),
-                () -> assertTrue(filterFoundTasksBy(task, foundTasks).isEmpty())
-        );
-    }
+            var foundTasks = service.execute(buildSearchByIdRequest(task.getId()));
 
-    private SearchTasksRequest buildSearchByTitleRequest(String title) {
-        return SearchTasksRequest.builder()
-                .title(title)
-                .build();
+            assertAll(
+                    () -> assertFalse(foundTasks.getTasks().isEmpty()),
+                    () -> assertFalse(filterFoundTasksBy(task, foundTasks).isEmpty())
+            );
+        }
+
+        @Test
+        @DisplayName("should return a a empty list when no task is found")
+        void shouldReturnAEmptyListWhenNoTaskIsFound() {
+            var author = User.newInstance(USER_NAME);
+            var task = repository.save(Task.newInstance(author, TASK_TITLE));
+
+            var foundTasks = service.execute(buildSearchByIdRequest(UUID.randomUUID()));
+
+            assertAll(
+                    () -> assertTrue(foundTasks.getTasks().isEmpty()),
+                    () -> assertTrue(filterFoundTasksBy(task, foundTasks).isEmpty())
+            );
+        }
+
+        private SearchTasksRequest buildSearchByIdRequest(UUID id) {
+            return SearchTasksRequest.builder()
+                    .id(id)
+                    .build();
+        }
     }
 }
