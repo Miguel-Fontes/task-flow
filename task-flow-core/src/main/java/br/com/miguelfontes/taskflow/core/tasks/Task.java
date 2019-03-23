@@ -17,11 +17,11 @@ public final class Task {
     private final TaskStatus status;
     private final User author;
 
-    private Task(String title, LocalDateTime createdAt, LocalDateTime updatedAt, TaskStatus status, User author) {
+    private Task(UUID id, String title, LocalDateTime createdAt, LocalDateTime updatedAt, TaskStatus status, User author) {
         guardIsValidTitle(title);
         guardIsValidAuthor(author);
 
-        this.id = UUID.randomUUID();
+        this.id = id;
         this.title = title;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
@@ -40,7 +40,19 @@ public final class Task {
     }
 
     public static Task newInstance(User author, String title) {
-        return new Task(title, LocalDateTime.now(), LocalDateTime.now(), TaskStatus.INBOX, author);
+        return new Task(UUID.randomUUID(), title, LocalDateTime.now(), LocalDateTime.now(), TaskStatus.INBOX, author);
+    }
+
+    public Task withTitle(String title) {
+        return new Task(id, title, createdAt, LocalDateTime.now(), status, author);
+    }
+
+    public Task withStatus(TaskStatus status) {
+        return new Task(id, title, createdAt, LocalDateTime.now(), status, author);
+    }
+
+    public Task withAuthor(User author) {
+        return new Task(id, title, createdAt, LocalDateTime.now(), status, author);
     }
 
     public UUID getId() {
@@ -66,4 +78,6 @@ public final class Task {
     public TaskStatus getStatus() {
         return status;
     }
+
+
 }

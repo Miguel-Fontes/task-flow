@@ -85,5 +85,64 @@ class TaskTest {
                 assertThrows(IllegalArgumentException.class, () -> Task.newInstance(null, title));
             }
         }
+
+        @Nested
+        @DisplayName("mutations creates new instances")
+        class mutations {
+            private final String title = "my task title";
+            private final String userName = "a user name";
+            private final User user = User.newInstance(userName);
+            private final Task task = Task.newInstance(user, title);
+
+            @Test
+            @DisplayName("with a new title")
+            void withANewTitle() {
+                String newTitle = "a new title";
+                Task updatedTask = task.withTitle(newTitle);
+
+                assertAll(
+                        () -> assertEquals(task.getId(), updatedTask.getId()),
+                        () -> assertEquals(task.getAuthor(), updatedTask.getAuthor()),
+                        () -> assertEquals(task.getStatus(), updatedTask.getStatus()),
+                        () -> assertEquals(task.getCreatedAt(), updatedTask.getCreatedAt()),
+                        () -> assertNotEquals(task.getTitle(), updatedTask.getTitle()),
+                        () -> assertNotEquals(task.getUpdatedAt(), updatedTask.getUpdatedAt())
+                );
+
+            }
+
+            @Test
+            @DisplayName("with a new status")
+            void withANewStatus() {
+                TaskStatus status = TaskStatus.TODO;
+                Task updatedTask = task.withStatus(status);
+
+                assertAll(
+                        () -> assertEquals(task.getId(), updatedTask.getId()),
+                        () -> assertEquals(task.getTitle(), updatedTask.getTitle()),
+                        () -> assertEquals(task.getAuthor(), updatedTask.getAuthor()),
+                        () -> assertEquals(task.getCreatedAt(), updatedTask.getCreatedAt()),
+                        () -> assertNotEquals(task.getStatus(), updatedTask.getStatus()),
+                        () -> assertNotEquals(task.getUpdatedAt(), updatedTask.getUpdatedAt())
+                );
+            }
+
+            @Test
+            @DisplayName("with a new author")
+            void withANewAuthor() {
+                User newAuthor = User.newInstance("new author");
+                Task updatedTask = task.withAuthor(newAuthor);
+
+                assertAll(
+                        () -> assertEquals(task.getId(), updatedTask.getId()),
+                        () -> assertEquals(task.getTitle(), updatedTask.getTitle()),
+                        () -> assertEquals(task.getStatus(), updatedTask.getStatus()),
+                        () -> assertEquals(task.getCreatedAt(), updatedTask.getCreatedAt()),
+                        () -> assertNotEquals(task.getAuthor(), updatedTask.getAuthor()),
+                        () -> assertNotEquals(task.getUpdatedAt(), updatedTask.getUpdatedAt())
+                );
+            }
+        }
+
     }
 }
