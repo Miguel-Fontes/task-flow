@@ -19,11 +19,10 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @DisplayName("search task")
 class SearchTasksTest {
-
     private static final String USER_NAME = "User name";
-    private final TasksAPI service = TasksService.instance(repository);
     private static final String TASK_TITLE = "A task title";
     private final TaskRepository repository = TaskRepositoryMMDB.instance();
+    private final TasksAPI service = TasksService.instance(repository);
 
     @Test
     @DisplayName("should return empty list when no task is found")
