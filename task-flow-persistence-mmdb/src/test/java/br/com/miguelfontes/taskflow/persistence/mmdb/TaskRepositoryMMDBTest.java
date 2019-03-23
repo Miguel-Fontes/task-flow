@@ -61,4 +61,23 @@ class TaskRepositoryMMDBTest {
 
         assertFalse(tasks.contains(task));
     }
+
+    @Test
+    @DisplayName("should find a task by its id")
+    void shouldFindATaskByItsId() {
+        var task = repository.save(TASK);
+
+        var foundTask = repository.findById(TASK.getId());
+
+        assertTrue(foundTask.isPresent());
+        assertEquals(task, foundTask.get());
+    }
+
+    @Test
+    @DisplayName("should return optional empty when task id is not found")
+    void shouldReturnOptionEmptyWhenTaskIdIsNotFound() {
+        var foundTask = repository.findById(TASK.getId());
+
+        assertTrue(foundTask.isEmpty());
+    }
 }

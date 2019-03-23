@@ -59,4 +59,11 @@ public class TaskRepositoryMMDB implements TaskRepository {
                 .filter(task -> title.equalsIgnoreCase(task.getTitle()))
                 .collect(Collectors.toList());
     }
+
+    @Override
+    public Optional<Task> findById(UUID id) {
+        return tasks.stream()
+                .filter(task -> task.getId().equals(id))
+                .findFirst();
+    }
 }
