@@ -5,5 +5,5 @@ package br.com.miguelfontes.taskflow.ports.tasks;
  *
  * @author Miguel Fontes
  */
-public interface TasksAPI extends CreateTask, SearchTasks, DeleteTask {
+public interface TasksAPI extends CreateTask, SearchTasks, DeleteTask, UpdateTask {
 }
