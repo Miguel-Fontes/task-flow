@@ -4,12 +4,14 @@ import br.com.miguelfontes.taskflow.core.tasks.Task;
 import br.com.miguelfontes.taskflow.ports.persistence.TaskRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.HashSet;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
-import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
+
+import static java.util.stream.Collectors.toUnmodifiableList;
 
 /**
  * A In Memory implementation of the {@link TaskRepository} specification, intended to be used
@@ -20,14 +22,14 @@ import java.util.stream.Collectors;
 @Repository
 public class TaskRepositoryMMDB implements TaskRepository {
 
-    private final Set<Task> tasks;
+    private final Map<UUID, Task> tasks;
 
-    private TaskRepositoryMMDB(Set<Task> tasks) {
+    private TaskRepositoryMMDB(Map<UUID, Task> tasks) {
         this.tasks = tasks;
     }
 
     public static TaskRepository instance() {
-        return new TaskRepositoryMMDB(new HashSet<>());
+        return new TaskRepositoryMMDB(new HashMap<>());
     }
 
     @Override
@@ -38,31 +40,30 @@ public class TaskRepositoryMMDB implements TaskRepository {
     }
 
     private Task persist(Task task) {
-        tasks.add(task);
+        tasks.put(task.getId(), task);
         return task;
     }
 
     @Override
     public List<Task> findAll() {
-        return List.copyOf(tasks);
+        return tasks.values().stream()
+                .collect(toUnmodifiableList());
     }
 
     @Override
     public void delete(UUID id) {
-        tasks.removeIf(task -> id.equals(task.getId()));
+        tasks.remove(id);
     }
 
     @Override
     public List<Task> findByTitle(String title) {
-        return tasks.stream()
+        return tasks.values().stream()
                 .filter(task -> title.equalsIgnoreCase(task.getTitle()))
                 .collect(Collectors.toList());
     }
 
     @Override
     public Optional<Task> findById(UUID id) {
-        return tasks.stream()
-                .filter(task -> task.getId().equals(id))
-                .findFirst();
+        return Optional.ofNullable(tasks.get(id));
     }
 }
