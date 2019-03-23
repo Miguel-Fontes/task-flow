@@ -29,6 +29,19 @@ class TaskRepositoryMMDBTest {
     }
 
     @Test
+    @DisplayName("should update a previously persisted task")
+    void shouldUpdateAPreviouslyPersistedTask() {
+        var task = repository.save(TASK);
+        final var newTaskTitle = "a new title";
+        repository.save(task.withTitle(newTaskTitle));
+
+        var foundTask = repository.findById(TASK.getId());
+
+        assertTrue(foundTask.isPresent());
+        assertEquals(newTaskTitle, foundTask.get().getTitle());
+    }
+
+    @Test
     @DisplayName("should retrieve all persisted tasks")
     void shouldRetrieveAllPersistedTasks() {
         var task = repository.save(TASK);

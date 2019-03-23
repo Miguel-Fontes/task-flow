@@ -3,22 +3,23 @@ package br.com.miguelfontes.taskflow.persistence;
 import br.com.miguelfontes.taskflow.core.tasks.Task;
 import br.com.miguelfontes.taskflow.ports.persistence.TaskRepository;
 
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.UUID;
 
 import static java.util.stream.Collectors.toList;
 
 public class StubTaskRepository implements TaskRepository {
-    private final List<Task> tasks;
+    private final Set<Task> tasks;
 
-    private StubTaskRepository(List<Task> tasks) {
+    private StubTaskRepository(Set<Task> tasks) {
         this.tasks = tasks;
     }
 
     public static StubTaskRepository instance() {
-        return new StubTaskRepository(new ArrayList<>());
+        return new StubTaskRepository(new HashSet<>());
     }
 
     @Override
@@ -29,7 +30,7 @@ public class StubTaskRepository implements TaskRepository {
 
     @Override
     public List<Task> findAll() {
-        return tasks;
+        return List.copyOf(tasks);
     }
 
     @Override
