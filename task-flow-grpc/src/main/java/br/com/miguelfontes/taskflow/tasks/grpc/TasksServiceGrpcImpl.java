@@ -7,6 +7,8 @@ import br.com.miguelfontes.taskflow.ports.tasks.SearchTasksRequest;
 import br.com.miguelfontes.taskflow.ports.tasks.SearchTasksResponse;
 import br.com.miguelfontes.taskflow.ports.tasks.TaskDTO;
 import br.com.miguelfontes.taskflow.ports.tasks.TasksAPI;
+import br.com.miguelfontes.taskflow.ports.tasks.UpdateTaskRequest;
+import br.com.miguelfontes.taskflow.ports.tasks.UpdateTaskResponse;
 import io.grpc.stub.StreamObserver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -62,6 +64,7 @@ public class TasksServiceGrpcImpl extends TasksServiceGrpc.TasksServiceImplBase 
                 .setAuthor(task.getAuthor().toString())
                 .setId(task.getId().toString())
                 .setTitle(task.getTitle())
+                .setDescription(task.getDescription())
                 .setCreatedAt(task.getCreatedAt().toString())
                 .setUpdatedAt(task.getUpdatedAt().toString())
                 .setStatus(task.getStatus())
@@ -115,4 +118,34 @@ public class TasksServiceGrpcImpl extends TasksServiceGrpc.TasksServiceImplBase 
         responseObserver.onCompleted();
     }
 
+    @Override
+    public void update(TasksServiceOuterClass.UpdateTaskRequest request, StreamObserver<TasksServiceOuterClass.UpdateTaskResponse> responseObserver) {
+        var response = Optional.of(request)
+                .map(this::buildUpdateTaskRequest)
+                .map(api::execute)
+                .map(UpdateTaskResponse::getTask)
+                .map(this::toOuterTask)
+                .map(this::buildUpdateTaskResponse)
+                .orElse(TasksServiceOuterClass.UpdateTaskResponse.newBuilder().build());
+
+        responseObserver.onNext(response);
+        responseObserver.onCompleted();
+    }
+
+
+    private UpdateTaskRequest buildUpdateTaskRequest(TasksServiceOuterClass.UpdateTaskRequest request) {
+        return UpdateTaskRequest.of(
+                UUID.fromString(request.getId()),
+                request.getTitle(),
+                request.getDescription(),
+                request.getStatus(),
+                UUID.fromString(request.getAuthor())
+        );
+    }
+
+    private TasksServiceOuterClass.UpdateTaskResponse buildUpdateTaskResponse(TasksServiceOuterClass.Task task) {
+        return TasksServiceOuterClass.UpdateTaskResponse.newBuilder()
+                .setTask(task)
+                .build();
+    }
 }

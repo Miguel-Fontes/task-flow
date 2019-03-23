@@ -117,4 +117,37 @@ class TasksServiceGrpcImplTest extends GrpcTest {
     private TasksServiceOuterClass.DeleteTaskRequest buildDeleteTaskRequest(TasksServiceOuterClass.Task task) {
         return TasksServiceOuterClass.DeleteTaskRequest.newBuilder().setUuid(task.getId()).build();
     }
+
+    @Test
+    @DisplayName("should update a task title and description")
+    void shouldUpdateATask() {
+        final String newTitle = "a new title";
+        final String newDescription = "a new description";
+        var task = stub.create(buildCreateTaskRequest(USER_ID, TASK_TITLE)).getTask();
+
+        final var updatedTask = stub.update(
+                buildDefaultTaskUpdateRequest(task)
+                        .setTitle(newTitle)
+                        .setDescription(newDescription)
+                        .build())
+                .getTask();
+
+        assertAll(
+                () -> assertEquals(newTitle, updatedTask.getTitle()),
+                () -> assertEquals(newDescription, updatedTask.getDescription()),
+                () -> assertEquals(task.getAuthor(), updatedTask.getAuthor()),
+                () -> assertEquals(task.getId(), updatedTask.getId()),
+                () -> assertEquals(task.getStatus(), updatedTask.getStatus()),
+                () -> assertEquals(task.getCreatedAt(), updatedTask.getCreatedAt())
+        );
+    }
+
+    private TasksServiceOuterClass.UpdateTaskRequest.Builder buildDefaultTaskUpdateRequest(TasksServiceOuterClass.Task task) {
+        return TasksServiceOuterClass.UpdateTaskRequest.newBuilder()
+                .setId(task.getId())
+                .setTitle(task.getId())
+                .setDescription(task.getDescription())
+                .setStatus(task.getStatus())
+                .setAuthor(task.getAuthor());
+    }
 }
