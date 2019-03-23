@@ -149,4 +149,24 @@ class TaskTest {
             }
         }
     }
+
+    @Nested
+    @DisplayName("operations")
+    class Operations {
+        private final String title = "my task title";
+        private final String userName = "a user name";
+        private final User user = User.newInstance(userName);
+        private final Task task = Task.newInstance(user, title);
+
+        @Test
+        @DisplayName("should set a task as done")
+        void shouldSetATaskAsDone() {
+            var concludedTask = task.conclude();
+
+            assertAll(
+                    () -> assertEquals(TaskStatus.DONE, concludedTask.getStatus()),
+                    () -> assertNotEquals(task.getUpdatedAt(), concludedTask.getUpdatedAt())
+            );
+        }
+    }
 }

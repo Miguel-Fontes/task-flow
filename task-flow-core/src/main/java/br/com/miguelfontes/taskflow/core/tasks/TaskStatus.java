@@ -6,5 +6,5 @@ package br.com.miguelfontes.taskflow.core.tasks;
  * @author Miguel Fontes
  */
 public enum TaskStatus {
-    INBOX, TODO
+    INBOX, TODO, DOING, DONE
 }

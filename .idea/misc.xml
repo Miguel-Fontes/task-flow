@@ -8,6 +8,9 @@
       <writeAnnotation name="com.beust.jcommander.Parameter" />
     </writeAnnotations>
   </component>
+  <component name="JavadocGenerationManager">
+    <option name="OUTPUT_DIRECTORY" value="$PROJECT_DIR$/target" />
+  </component>
   <component name="MavenProjectsManager">
     <option name="originalFiles">
       <list>

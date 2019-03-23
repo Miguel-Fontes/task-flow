@@ -51,12 +51,33 @@ public final class Task {
             throw new IllegalArgumentException("Given description is null!");
     }
 
+    /**
+     * Edit's a Task title.
+     *
+     * @param title the intended title of the Task
+     * @return a new instance of Task with the new title
+     */
     public Task editTitle(String title) {
         return new Task(id, title, description, createdAt, LocalDateTime.now(), status, author);
     }
 
+    /**
+     * Edit's a Task description.
+     *
+     * @param description the intended description of the Task
+     * @return a new instance of Task with the new description
+     */
     public Task editDescription(String description) {
         return new Task(id, title, description, createdAt, LocalDateTime.now(), status, author);
+    }
+
+    /**
+     * Marks a Task as Done.
+     *
+     * @return a new instance of Task, with it's status as Done
+     */
+    public Task conclude() {
+        return new Task(id, title, description, createdAt, LocalDateTime.now(), TaskStatus.DONE, author);
     }
 
     public UUID getId() {
