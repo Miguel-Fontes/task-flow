@@ -11,6 +11,7 @@
         <module>task-flow-ports-tasks</module>
         <module>task-flow-ports-persistence</module>
         <module>task-flow-tasks</module>
+        <module>task-flow-tasks-test</module>
         <module>task-flow-persistence-mmdb</module>
         <module>task-flow-grpc</module>
         <module>task-flow-grpc-dist</module>

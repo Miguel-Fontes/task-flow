@@ -10,5 +10,6 @@
     <file url="file://$PROJECT_DIR$/task-flow-ports-persistence" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/task-flow-ports-tasks" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/task-flow-tasks" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/task-flow-tasks-test" charset="UTF-8" />
   </component>
 </project>

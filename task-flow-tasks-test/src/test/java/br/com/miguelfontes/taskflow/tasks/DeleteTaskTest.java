@@ -1,6 +1,6 @@
 package br.com.miguelfontes.taskflow.tasks;
 
-import br.com.miguelfontes.taskflow.persistence.StubTaskRepository;
+import br.com.miguelfontes.taskflow.persistence.mmdb.TaskRepositoryMMDB;
 import br.com.miguelfontes.taskflow.ports.persistence.TaskRepository;
 import br.com.miguelfontes.taskflow.ports.tasks.CreateTaskRequest;
 import br.com.miguelfontes.taskflow.ports.tasks.DeleteTaskRequest;
@@ -18,7 +18,7 @@ class DeleteTaskTest {
     private static final UUID USER_ID = UUID.randomUUID();
     private static final String TASK_TITLE = "A task title!";
 
-    private final TaskRepository repository = StubTaskRepository.instance();
+    private final TaskRepository repository = TaskRepositoryMMDB.instance();
     private final TasksAPI service = TasksService.instance(repository);
 
     @Test

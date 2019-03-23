@@ -9,10 +9,10 @@
         <module name="task-flow-cli" />
         <module name="task-flow-grpc-test" />
         <module name="task-flow-ports-tasks" />
-        <module name="task-flow-grpc" />
-        <module name="task-flow-grpc-dist" />
         <module name="task-flow-persistence-mmdb" />
-        <module name="task-flow-tasks" />
+        <module name="task-flow-grpc-dist" />
+        <module name="task-flow-tasks-test" />
+        <module name="task-flow-grpc" />
         <module name="task-flow-core" />
         <module name="task-flow-ports-persistence" />
       </profile>
@@ -28,6 +28,7 @@
       <module name="task-flow-ports-persistence" target="11" />
       <module name="task-flow-ports-tasks" target="11" />
       <module name="task-flow-tasks" target="11" />
+      <module name="task-flow-tasks-test" target="11" />
     </bytecodeTargetLevel>
   </component>
 </project>

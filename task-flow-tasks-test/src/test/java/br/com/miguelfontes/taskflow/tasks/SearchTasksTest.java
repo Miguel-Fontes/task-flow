@@ -2,7 +2,7 @@ package br.com.miguelfontes.taskflow.tasks;
 
 import br.com.miguelfontes.taskflow.core.tasks.Task;
 import br.com.miguelfontes.taskflow.core.tasks.User;
-import br.com.miguelfontes.taskflow.persistence.StubTaskRepository;
+import br.com.miguelfontes.taskflow.persistence.mmdb.TaskRepositoryMMDB;
 import br.com.miguelfontes.taskflow.ports.persistence.TaskRepository;
 import br.com.miguelfontes.taskflow.ports.tasks.SearchTasksRequest;
 import br.com.miguelfontes.taskflow.ports.tasks.SearchTasksResponse;
@@ -20,11 +20,10 @@ import static org.junit.jupiter.api.Assertions.*;
 @DisplayName("search task")
 class SearchTasksTest {
 
-    private final TaskRepository repository = StubTaskRepository.instance();
+    private static final String USER_NAME = "User name";
     private final TasksAPI service = TasksService.instance(repository);
-
-    private final String USER_NAME = "User name";
-    private final String TASK_TITLE = "A task title";
+    private static final String TASK_TITLE = "A task title";
+    private final TaskRepository repository = TaskRepositoryMMDB.instance();
 
     @Test
     @DisplayName("should return empty list when no task is found")
