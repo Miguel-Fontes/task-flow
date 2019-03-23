@@ -24,8 +24,8 @@ class UpdateTaskUseCase {
 
     UpdateTaskResponse execute(UpdateTaskRequest request) {
         return repository.findById(request.getId())
-                .map(task -> task.withTitle(request.getTitle()))
-                .map(task -> task.withDescription(request.getDescription()))
+                .map(task -> task.editTitle(request.getTitle()))
+                .map(task -> task.editDescription(request.getDescription()))
                 .map(repository::save)
                 .map(TaskDTOFactory::from)
                 .map(UpdateTaskResponse::of)

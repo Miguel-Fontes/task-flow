@@ -51,11 +51,11 @@ public final class Task {
             throw new IllegalArgumentException("Given description is null!");
     }
 
-    public Task withTitle(String title) {
+    public Task editTitle(String title) {
         return new Task(id, title, description, createdAt, LocalDateTime.now(), status, author);
     }
 
-    public Task withDescription(String description) {
+    public Task editDescription(String description) {
         return new Task(id, title, description, createdAt, LocalDateTime.now(), status, author);
     }
 

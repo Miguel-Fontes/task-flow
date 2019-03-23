@@ -33,7 +33,7 @@ class TaskRepositoryMMDBTest {
     void shouldUpdateAPreviouslyPersistedTask() {
         var task = repository.save(TASK);
         final var newTaskTitle = "a new title";
-        repository.save(task.withTitle(newTaskTitle));
+        repository.save(task.editTitle(newTaskTitle));
 
         var foundTask = repository.findById(TASK.getId());
 

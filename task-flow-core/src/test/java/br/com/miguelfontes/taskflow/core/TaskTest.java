@@ -102,7 +102,7 @@ class TaskTest {
             @DisplayName("with a new title")
             void withANewTitle() {
                 String newTitle = "a new title";
-                Task updatedTask = task.withTitle(newTitle);
+                Task updatedTask = task.editTitle(newTitle);
 
                 assertAll(
                         () -> assertEquals(task.getId(), updatedTask.getId()),
@@ -120,7 +120,7 @@ class TaskTest {
             @DisplayName("with a new description")
             void withANewDescription() {
                 String newDescription = "a new description";
-                Task updatedTask = task.withDescription(newDescription);
+                Task updatedTask = task.editDescription(newDescription);
 
                 assertAll(
                         () -> assertEquals(task.getId(), updatedTask.getId()),
@@ -142,13 +142,13 @@ class TaskTest {
             @Test
             @DisplayName("should throw exception when title is changed to null")
             void shouldThrowExceptionWhenTitleIsChangedToNull() {
-                assertThrows(IllegalArgumentException.class, () -> Task.newInstance(user, title).withTitle(null));
+                assertThrows(IllegalArgumentException.class, () -> Task.newInstance(user, title).editTitle(null));
             }
 
             @Test
             @DisplayName("should throw exception when description is changed to null")
             void shouldThrowExceptionWhenDescriptionIsChangedToNull() {
-                assertThrows(IllegalArgumentException.class, () -> Task.newInstance(user, title).withDescription(null));
+                assertThrows(IllegalArgumentException.class, () -> Task.newInstance(user, title).editDescription(null));
             }
         }
     }
