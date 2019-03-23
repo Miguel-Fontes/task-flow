@@ -10,18 +10,20 @@ import java.util.UUID;
 public class UpdateTaskRequest {
     private final UUID id;
     private final String title;
+    private final String description;
     private final String status;
     private final UUID author;
 
-    private UpdateTaskRequest(UUID id, String title, String status, UUID author) {
+    private UpdateTaskRequest(UUID id, String title, String description, String status, UUID author) {
         this.id = id;
         this.title = title;
         this.status = status;
+        this.description = description;
         this.author = author;
     }
 
-    public static UpdateTaskRequest of(UUID id, String title, String status, UUID author) {
-        return new UpdateTaskRequest(id, title, status, author);
+    public static UpdateTaskRequest of(UUID id, String title, String description, String status, UUID author) {
+        return new UpdateTaskRequest(id, title, description, status, author);
     }
 
     public UUID getId() {
@@ -30,6 +32,10 @@ public class UpdateTaskRequest {
 
     public String getTitle() {
         return title;
+    }
+
+    public String getDescription() {
+        return description;
     }
 
     public String getStatus() {
@@ -45,6 +51,7 @@ public class UpdateTaskRequest {
         return "UpdateTaskRequest{" +
                 "id=" + id +
                 ", title='" + title + '\'' +
+                ", description='" + description + '\'' +
                 ", status='" + status + '\'' +
                 ", author=" + author +
                 '}';

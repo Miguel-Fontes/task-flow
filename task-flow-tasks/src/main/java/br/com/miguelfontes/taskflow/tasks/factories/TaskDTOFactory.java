@@ -20,6 +20,6 @@ public class TaskDTOFactory {
      * @return a TaskDTO instance, containing data of the given Task instance
      */
     public static TaskDTO from(Task task) {
-        return TaskDTO.of(task.getId(), task.getTitle(), task.getCreatedAt(), task.getUpdatedAt(), task.getStatus().toString(), task.getAuthor().getId());
+        return TaskDTO.of(task.getId(), task.getTitle(), task.getDescription(), task.getCreatedAt(), task.getUpdatedAt(), task.getStatus().toString(), task.getAuthor().getId());
     }
 }

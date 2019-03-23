@@ -12,22 +12,24 @@ import java.util.UUID;
 public final class TaskDTO {
     private final UUID id;
     private final String title;
+    private final String description;
     private final LocalDateTime createdAt;
     private final LocalDateTime updatedAt;
     private final String status;
     private final UUID author;
 
-    private TaskDTO(UUID id, String title, LocalDateTime createdAt, LocalDateTime updatedAt, String status, UUID author) {
+    private TaskDTO(UUID id, String title, String description, LocalDateTime createdAt, LocalDateTime updatedAt, String status, UUID author) {
         this.id = id;
         this.title = title;
+        this.description = description;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
         this.status = status;
         this.author = author;
     }
 
-    public static TaskDTO of(UUID id, String title, LocalDateTime createdAt, LocalDateTime updatedAt, String status, UUID author) {
-        return new TaskDTO(id, title, createdAt, updatedAt, status, author);
+    public static TaskDTO of(UUID id, String title, String description, LocalDateTime createdAt, LocalDateTime updatedAt, String status, UUID author) {
+        return new TaskDTO(id, title, description, createdAt, updatedAt, status, author);
     }
 
     public UUID getId() {
@@ -36,6 +38,10 @@ public final class TaskDTO {
 
     public String getTitle() {
         return title;
+    }
+
+    public String getDescription() {
+        return description;
     }
 
     public LocalDateTime getCreatedAt() {
@@ -59,6 +65,7 @@ public final class TaskDTO {
         return "TaskDTO{" +
                 "id=" + id +
                 ", title='" + title + '\'' +
+                ", description='" + description + '\'' +
                 ", createdAt=" + createdAt +
                 ", updatedAt=" + updatedAt +
                 ", status='" + status + '\'' +

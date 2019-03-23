@@ -41,6 +41,6 @@ class UpdateTaskTest {
     }
 
     private UpdateTaskRequest buildUpdateTaskTitleRequest(Task task, String title) {
-        return UpdateTaskRequest.of(task.getId(), title, task.getStatus().toString(), task.getAuthor().getId());
+        return UpdateTaskRequest.of(task.getId(), title, task.getDescription(), task.getStatus().toString(), task.getAuthor().getId());
     }
 }
