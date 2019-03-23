@@ -12,21 +12,28 @@ import java.util.UUID;
 public final class Task {
     private final UUID id;
     private final String title;
+    private final String description;
     private final LocalDateTime createdAt;
     private final LocalDateTime updatedAt;
     private final TaskStatus status;
     private final User author;
 
-    private Task(UUID id, String title, LocalDateTime createdAt, LocalDateTime updatedAt, TaskStatus status, User author) {
+    private Task(UUID id, String title, String description, LocalDateTime createdAt, LocalDateTime updatedAt, TaskStatus status, User author) {
         guardIsValidTitle(title);
+        guardIsValidDescription(description);
         guardIsValidAuthor(author);
 
         this.id = id;
         this.title = title;
+        this.description = description;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
         this.status = status;
         this.author = author;
+    }
+
+    public static Task newInstance(User author, String title) {
+        return new Task(UUID.randomUUID(), title, "", LocalDateTime.now(), LocalDateTime.now(), TaskStatus.INBOX, author);
     }
 
     private void guardIsValidTitle(String title) {
@@ -39,12 +46,17 @@ public final class Task {
             throw new IllegalArgumentException("Given author is null!");
     }
 
-    public static Task newInstance(User author, String title) {
-        return new Task(UUID.randomUUID(), title, LocalDateTime.now(), LocalDateTime.now(), TaskStatus.INBOX, author);
+    private void guardIsValidDescription(String description) {
+        if (Objects.isNull(description))
+            throw new IllegalArgumentException("Given description is null!");
     }
 
     public Task withTitle(String title) {
-        return new Task(id, title, createdAt, LocalDateTime.now(), status, author);
+        return new Task(id, title, description, createdAt, LocalDateTime.now(), status, author);
+    }
+
+    public Task withDescription(String description) {
+        return new Task(id, title, description, createdAt, LocalDateTime.now(), status, author);
     }
 
     public UUID getId() {
@@ -71,5 +83,7 @@ public final class Task {
         return status;
     }
 
-
+    public String getDescription() {
+        return description;
+    }
 }

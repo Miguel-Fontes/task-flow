@@ -19,8 +19,6 @@ class TaskTest {
         @Nested
         @DisplayName("valid arguments")
         class validArguments {
-
-
             private final String title = "my task title";
             private final String userName = "a user name";
             private final User user = User.newInstance(userName);
@@ -79,20 +77,26 @@ class TaskTest {
                 assertThrows(IllegalArgumentException.class, () -> Task.newInstance(user, null));
             }
 
+
             @Test
             @DisplayName("should throw exception when user is null")
             void shouldThrowExceptionWhenUserIsNull() {
                 assertThrows(IllegalArgumentException.class, () -> Task.newInstance(null, title));
             }
         }
+    }
+
+    @Nested
+    @DisplayName("mutations")
+    class mutations {
+        private final String title = "my task title";
+        private final String userName = "a user name";
+        private final User user = User.newInstance(userName);
+        private final Task task = Task.newInstance(user, title);
 
         @Nested
-        @DisplayName("mutations creates new instances")
-        class mutations {
-            private final String title = "my task title";
-            private final String userName = "a user name";
-            private final User user = User.newInstance(userName);
-            private final Task task = Task.newInstance(user, title);
+        @DisplayName("valid arguments")
+        class ValidArguments {
 
             @Test
             @DisplayName("with a new title")
@@ -103,12 +107,48 @@ class TaskTest {
                 assertAll(
                         () -> assertEquals(task.getId(), updatedTask.getId()),
                         () -> assertEquals(task.getAuthor(), updatedTask.getAuthor()),
+                        () -> assertEquals(task.getDescription(), updatedTask.getDescription()),
                         () -> assertEquals(task.getStatus(), updatedTask.getStatus()),
                         () -> assertEquals(task.getCreatedAt(), updatedTask.getCreatedAt()),
                         () -> assertNotEquals(task.getTitle(), updatedTask.getTitle()),
-                        () -> assertNotEquals(task.getUpdatedAt(), updatedTask.getUpdatedAt())
+                        () -> assertNotEquals(task.getUpdatedAt(), updatedTask.getUpdatedAt()),
+                        () -> assertEquals(newTitle, updatedTask.getTitle())
                 );
+            }
 
+            @Test
+            @DisplayName("with a new description")
+            void withANewDescription() {
+                String newDescription = "a new description";
+                Task updatedTask = task.withDescription(newDescription);
+
+                assertAll(
+                        () -> assertEquals(task.getId(), updatedTask.getId()),
+                        () -> assertEquals(task.getTitle(), updatedTask.getTitle()),
+                        () -> assertEquals(task.getAuthor(), updatedTask.getAuthor()),
+                        () -> assertEquals(task.getStatus(), updatedTask.getStatus()),
+                        () -> assertEquals(task.getCreatedAt(), updatedTask.getCreatedAt()),
+                        () -> assertNotEquals(task.getDescription(), updatedTask.getDescription()),
+                        () -> assertNotEquals(task.getUpdatedAt(), updatedTask.getUpdatedAt()),
+                        () -> assertEquals(newDescription, updatedTask.getDescription())
+                );
+            }
+        }
+
+        @Nested
+        @DisplayName("invalid arguments")
+        class InvalidArguments {
+
+            @Test
+            @DisplayName("should throw exception when title is changed to null")
+            void shouldThrowExceptionWhenTitleIsChangedToNull() {
+                assertThrows(IllegalArgumentException.class, () -> Task.newInstance(user, title).withTitle(null));
+            }
+
+            @Test
+            @DisplayName("should throw exception when description is changed to null")
+            void shouldThrowExceptionWhenDescriptionIsChangedToNull() {
+                assertThrows(IllegalArgumentException.class, () -> Task.newInstance(user, title).withDescription(null));
             }
         }
     }
