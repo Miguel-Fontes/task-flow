@@ -1,8 +1,5 @@
-package br.com.miguelfontes.taskflow.core;
+package br.com.miguelfontes.taskflow.core.tasks;
 
-import br.com.miguelfontes.taskflow.core.tasks.Task;
-import br.com.miguelfontes.taskflow.core.tasks.TaskStatus;
-import br.com.miguelfontes.taskflow.core.tasks.User;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;

@@ -1,18 +1,12 @@
-package br.com.miguelfontes.taskflow.core;
+package br.com.miguelfontes.taskflow.core.tasks;
 
-import br.com.miguelfontes.taskflow.core.tasks.Task;
-import br.com.miguelfontes.taskflow.core.tasks.TaskStatus;
-import br.com.miguelfontes.taskflow.core.tasks.User;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
-import static org.junit.jupiter.api.Assertions.assertAll;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 @DisplayName("user")
 class UserTest {
