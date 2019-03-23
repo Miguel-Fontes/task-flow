@@ -14,7 +14,7 @@ import java.util.Optional;
  *
  * @author Miguel Fontes
  */
-public final class CreateTaskUseCase {
+final class CreateTaskUseCase {
 
     private final TaskRepository repository;
 

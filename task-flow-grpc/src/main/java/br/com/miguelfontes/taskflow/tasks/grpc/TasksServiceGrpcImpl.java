@@ -2,6 +2,7 @@ package br.com.miguelfontes.taskflow.tasks.grpc;
 
 import br.com.miguelfontes.taskflow.ports.tasks.CreateTaskRequest;
 import br.com.miguelfontes.taskflow.ports.tasks.CreateTaskResponse;
+import br.com.miguelfontes.taskflow.ports.tasks.DeleteTaskRequest;
 import br.com.miguelfontes.taskflow.ports.tasks.SearchTasksRequest;
 import br.com.miguelfontes.taskflow.ports.tasks.SearchTasksResponse;
 import br.com.miguelfontes.taskflow.ports.tasks.TaskDTO;
@@ -100,6 +101,18 @@ public class TasksServiceGrpcImpl extends TasksServiceGrpc.TasksServiceImplBase 
         return TasksServiceOuterClass.SearchTasksResponse.newBuilder()
                 .addAllTasks(foundTasks)
                 .build();
+    }
+
+    @Override
+    public void delete(TasksServiceOuterClass.DeleteTaskRequest request, StreamObserver<TasksServiceOuterClass.DeleteTaskResponse> responseObserver) {
+        Stream.of(request)
+                .map(TasksServiceOuterClass.DeleteTaskRequest::getUuid)
+                .map(UUID::fromString)
+                .map(DeleteTaskRequest::of)
+                .forEach(api::execute);
+
+        responseObserver.onNext(TasksServiceOuterClass.DeleteTaskResponse.newBuilder().build());
+        responseObserver.onCompleted();
     }
 
 }

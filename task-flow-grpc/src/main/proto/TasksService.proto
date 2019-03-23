@@ -18,6 +18,14 @@ message SearchTasksResponse {
     repeated Task tasks = 1;
 }
 
+message DeleteTaskRequest {
+    string uuid = 1;
+}
+
+message DeleteTaskResponse {
+
+}
+
 message Task {
     string id = 1;
     string title = 2;
@@ -30,4 +38,5 @@ message Task {
 service TasksService {
     rpc create (CreateTaskRequest) returns (CreateTaskResponse);
     rpc search (SearchTasksRequest) returns (SearchTasksResponse);
+    rpc delete (DeleteTaskRequest) returns (DeleteTaskResponse);
 }

@@ -5,6 +5,9 @@ import br.com.miguelfontes.taskflow.ports.persistence.TaskRepository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
+
+import static java.util.stream.Collectors.toList;
 
 public class StubTaskRepository implements TaskRepository {
     private final List<Task> tasks;
@@ -26,5 +29,17 @@ public class StubTaskRepository implements TaskRepository {
     @Override
     public List<Task> findAll() {
         return tasks;
+    }
+
+    @Override
+    public void delete(UUID id) {
+        tasks.removeIf(task -> id.equals(task.getId()));
+    }
+
+    @Override
+    public List<Task> findByTitle(String title) {
+        return tasks.stream()
+                .filter(task -> title.equalsIgnoreCase(task.getTitle()))
+                .collect(toList());
     }
 }

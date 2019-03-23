@@ -8,9 +8,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 @DisplayName("task repository mmdb")
 class TaskRepositoryMMDBTest {
@@ -51,5 +49,16 @@ class TaskRepositoryMMDBTest {
     @DisplayName("should throw exception if task is null")
     void shouldThrowExceptionIfTaskIsNull() {
         assertThrows(IllegalArgumentException.class, () -> repository.save(null));
+    }
+
+    @Test
+    @DisplayName("should delete a task")
+    void shouldDeleteATask() {
+        var task = repository.save(TASK);
+
+        repository.delete(task.getId());
+        var tasks = repository.findAll();
+
+        assertFalse(tasks.contains(task));
     }
 }
