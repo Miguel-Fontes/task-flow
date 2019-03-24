@@ -92,6 +92,7 @@
                 <artifactId>jacoco-maven-plugin</artifactId>
                 <version>0.8.3</version>
                 <configuration>
+                    <dataFile>${sonar.jacoco.reportPath}</dataFile>
                     <destFile>${sonar.jacoco.reportPath}</destFile>
                     <append>true</append>
                 </configuration>
