@@ -1,14 +1,18 @@
 package br.com.miguelfontes.taskflow.tasks.grpc;
 
+import br.com.miguelfontes.taskflow.ports.tasks.ConcludeTaskRequest;
+import br.com.miguelfontes.taskflow.ports.tasks.ConcludeTaskResponse;
 import br.com.miguelfontes.taskflow.ports.tasks.CreateTaskRequest;
 import br.com.miguelfontes.taskflow.ports.tasks.CreateTaskResponse;
 import br.com.miguelfontes.taskflow.ports.tasks.DeleteTaskRequest;
 import br.com.miguelfontes.taskflow.ports.tasks.SearchTasksRequest;
 import br.com.miguelfontes.taskflow.ports.tasks.SearchTasksResponse;
 import br.com.miguelfontes.taskflow.ports.tasks.TaskDTO;
+import br.com.miguelfontes.taskflow.ports.tasks.TaskNotFoundException;
 import br.com.miguelfontes.taskflow.ports.tasks.TasksAPI;
 import br.com.miguelfontes.taskflow.ports.tasks.UpdateTaskRequest;
 import br.com.miguelfontes.taskflow.ports.tasks.UpdateTaskResponse;
+import io.grpc.Status;
 import io.grpc.stub.StreamObserver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -146,6 +150,36 @@ public class TasksServiceGrpcImpl extends TasksServiceGrpc.TasksServiceImplBase 
     private TasksServiceOuterClass.UpdateTaskResponse buildUpdateTaskResponse(TasksServiceOuterClass.Task task) {
         return TasksServiceOuterClass.UpdateTaskResponse.newBuilder()
                 .setTask(task)
+                .build();
+    }
+
+    @Override
+    public void conclude(TasksServiceOuterClass.ConcludeTaskRequest request, StreamObserver<TasksServiceOuterClass.ConcludeTaskResponse> responseObserver) {
+        try {
+            var response = Optional.of(request)
+                    .map(TasksServiceOuterClass.ConcludeTaskRequest::getId)
+                    .map(UUID::fromString)
+                    .map(ConcludeTaskRequest::of)
+                    .map(api::execute)
+                    .map(ConcludeTaskResponse::getTask)
+                    .map(this::toOuterTask)
+                    .map(this::buildConcludeTaskResponse)
+                    .orElseThrow();
+
+            responseObserver.onNext(response);
+            responseObserver.onCompleted();
+
+        } catch (TaskNotFoundException e) {
+            responseObserver.onError(Status.NOT_FOUND
+                    .withDescription(e.getMessage())
+                    .withCause(e)
+                    .asRuntimeException());
+        }
+    }
+
+    private TasksServiceOuterClass.ConcludeTaskResponse buildConcludeTaskResponse(TasksServiceOuterClass.Task concludeTaskResponse) {
+        return TasksServiceOuterClass.ConcludeTaskResponse.newBuilder()
+                .setTask(concludeTaskResponse)
                 .build();
     }
 }

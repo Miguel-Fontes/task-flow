@@ -4,6 +4,7 @@ import io.grpc.StatusRuntimeException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestReporter;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
@@ -149,5 +150,38 @@ class TasksServiceGrpcImplTest extends GrpcTest {
                 .setDescription(task.getDescription())
                 .setStatus(task.getStatus())
                 .setAuthor(task.getAuthor());
+    }
+
+    @Test
+    @DisplayName("should conclude a task")
+    void shouldConcludeATask() {
+        var request = buildCreateTaskRequest(USER_ID, TASK_TITLE);
+        var task = stub.create(request).getTask();
+
+        final var concludedTask = stub.conclude(buildConcludeTaskRequest(task.getId())).getTask();
+
+        assertAll(
+                () -> assertEquals(task.getId(), concludedTask.getId()),
+                () -> assertNotEquals(task.getUpdatedAt(), concludedTask.getUpdatedAt()),
+                () -> assertEquals("DONE", concludedTask.getStatus())
+        );
+    }
+
+    private TasksServiceOuterClass.ConcludeTaskRequest buildConcludeTaskRequest(String id) {
+        return TasksServiceOuterClass.ConcludeTaskRequest.newBuilder()
+                .setId(id)
+                .build();
+    }
+
+    @Test
+    @DisplayName("should throw exception when given task id is not found")
+    void shouldThrowExceptionWhenGivenTaskIdIsNotFound(TestReporter reporter) {
+        var uuid = UUID.randomUUID();
+        final var taskNotFoundException = assertThrows(StatusRuntimeException.class, () -> stub.conclude(buildConcludeTaskRequest(uuid.toString())));
+
+        reporter.publishEntry("Error message: " + taskNotFoundException.getMessage());
+        assertAll(
+                () -> assertTrue(taskNotFoundException.getMessage().contains(uuid.toString()))
+        );
     }
 }

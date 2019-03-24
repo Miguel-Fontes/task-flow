@@ -38,6 +38,14 @@ message UpdateTaskResponse {
     Task task = 1;
 }
 
+message ConcludeTaskRequest {
+    string id = 1;
+}
+
+message ConcludeTaskResponse {
+    Task task = 1;
+}
+
 message Task {
     string id = 1;
     string title = 2;
@@ -53,4 +61,5 @@ service TasksService {
     rpc search (SearchTasksRequest) returns (SearchTasksResponse);
     rpc delete (DeleteTaskRequest) returns (DeleteTaskResponse);
     rpc update (UpdateTaskRequest) returns (UpdateTaskResponse);
+    rpc conclude (ConcludeTaskRequest) returns (ConcludeTaskResponse);
 }
