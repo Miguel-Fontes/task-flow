@@ -107,4 +107,8 @@ public final class Task {
     public String getDescription() {
         return description;
     }
+
+    public Task start() {
+        return new Task(id, title, description, createdAt, LocalDateTime.now(), TaskStatus.DOING, author);
+    }
 }

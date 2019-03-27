@@ -8,6 +8,8 @@ import br.com.miguelfontes.taskflow.ports.tasks.CreateTaskResponse;
 import br.com.miguelfontes.taskflow.ports.tasks.DeleteTaskRequest;
 import br.com.miguelfontes.taskflow.ports.tasks.SearchTasksRequest;
 import br.com.miguelfontes.taskflow.ports.tasks.SearchTasksResponse;
+import br.com.miguelfontes.taskflow.ports.tasks.StartTaskRequest;
+import br.com.miguelfontes.taskflow.ports.tasks.StartTaskResponse;
 import br.com.miguelfontes.taskflow.ports.tasks.TasksAPI;
 import br.com.miguelfontes.taskflow.ports.tasks.UpdateTaskRequest;
 import br.com.miguelfontes.taskflow.ports.tasks.UpdateTaskResponse;
@@ -56,5 +58,10 @@ public class TasksService implements TasksAPI {
     @Override
     public ConcludeTaskResponse execute(ConcludeTaskRequest request) {
         return ConcludeTaskUseCase.instance(repository).execute(request);
+    }
+
+    @Override
+    public StartTaskResponse execute(StartTaskRequest request) {
+        return StartTaskUseCase.instance(repository).execute(request);
     }
 }
