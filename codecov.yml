@@ -1,4 +1,0 @@
-ignore:
-  - "**/task-flow-ports-*"
-  - "**/Application.java"
-  - "**/GrpcServer.java"

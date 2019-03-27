@@ -22,7 +22,6 @@ cache:
   - $HOME/.m2
 
 after_success:
-- bash <(curl -s https://codecov.io/bash)
 - mvn sonar:sonar -Dsonar.projectKey=Miguel-Fontes_task-flow -Dsonar.organization=$SONARQUBE_ORGANIZATION -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=$SONARQUBE_TOKEN
 
 deploy:
