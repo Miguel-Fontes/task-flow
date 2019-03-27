@@ -3,6 +3,7 @@ package br.com.miguelfontes.taskflow.tasks.grpc;
 import io.grpc.StatusRuntimeException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestReporter;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -152,36 +153,78 @@ class TasksServiceGrpcImplTest extends GrpcTest {
                 .setAuthor(task.getAuthor());
     }
 
-    @Test
-    @DisplayName("should conclude a task")
-    void shouldConcludeATask() {
-        var request = buildCreateTaskRequest(USER_ID, TASK_TITLE);
-        var task = stub.create(request).getTask();
+    @Nested
+    @DisplayName("conclude task")
+    class ConcludeTask {
 
-        final var concludedTask = stub.conclude(buildConcludeTaskRequest(task.getId())).getTask();
+        @Test
+        @DisplayName("should conclude a task")
+        void shouldConcludeATask() {
+            var request = buildCreateTaskRequest(USER_ID, TASK_TITLE);
+            var task = stub.create(request).getTask();
 
-        assertAll(
-                () -> assertEquals(task.getId(), concludedTask.getId()),
-                () -> assertNotEquals(task.getUpdatedAt(), concludedTask.getUpdatedAt()),
-                () -> assertEquals("DONE", concludedTask.getStatus())
-        );
+            final var concludedTask = stub.conclude(buildConcludeTaskRequest(task.getId())).getTask();
+
+            assertAll(
+                    () -> assertEquals(task.getId(), concludedTask.getId()),
+                    () -> assertNotEquals(task.getUpdatedAt(), concludedTask.getUpdatedAt()),
+                    () -> assertEquals("DONE", concludedTask.getStatus())
+            );
+        }
+
+        private TasksServiceOuterClass.ConcludeTaskRequest buildConcludeTaskRequest(String id) {
+            return TasksServiceOuterClass.ConcludeTaskRequest.newBuilder()
+                    .setId(id)
+                    .build();
+        }
+
+        @Test
+        @DisplayName("should throw exception when given task id is not found")
+        void shouldThrowExceptionWhenGivenTaskIdIsNotFound(TestReporter reporter) {
+            var uuid = UUID.randomUUID();
+            final var taskNotFoundException =
+                    assertThrows(StatusRuntimeException.class, () -> stub.conclude(buildConcludeTaskRequest(uuid.toString())));
+
+            reporter.publishEntry("Error message: " + taskNotFoundException.getMessage());
+            assertAll(
+                    () -> assertTrue(taskNotFoundException.getMessage().contains(uuid.toString()))
+            );
+        }
     }
 
-    private TasksServiceOuterClass.ConcludeTaskRequest buildConcludeTaskRequest(String id) {
-        return TasksServiceOuterClass.ConcludeTaskRequest.newBuilder()
-                .setId(id)
-                .build();
-    }
+    @Nested
+    @DisplayName("start task")
+    class StartTask {
 
-    @Test
-    @DisplayName("should throw exception when given task id is not found")
-    void shouldThrowExceptionWhenGivenTaskIdIsNotFound(TestReporter reporter) {
-        var uuid = UUID.randomUUID();
-        final var taskNotFoundException = assertThrows(StatusRuntimeException.class, () -> stub.conclude(buildConcludeTaskRequest(uuid.toString())));
+        @Test
+        @DisplayName("should start a task")
+        void shouldStartATask() {
+            var task = stub.create(buildCreateTaskRequest(USER_ID, TASK_TITLE)).getTask();
 
-        reporter.publishEntry("Error message: " + taskNotFoundException.getMessage());
-        assertAll(
-                () -> assertTrue(taskNotFoundException.getMessage().contains(uuid.toString()))
-        );
+            final var startedTask = stub.start(buildStartTaskRequest(task.getId())).getTask();
+
+            assertAll(
+                    () -> assertEquals("DOING", startedTask.getStatus()),
+                    () -> assertNotEquals(task.getUpdatedAt(), startedTask.getUpdatedAt())
+            );
+        }
+
+        private TasksServiceOuterClass.StartTaskRequest buildStartTaskRequest(String id) {
+            return TasksServiceOuterClass.StartTaskRequest.newBuilder()
+                    .setId(id)
+                    .build();
+        }
+
+        @Test
+        @DisplayName("should throw exception when id is not found")
+        void shouldThrowExceptionWhenIdIsNotFound(TestReporter reporter) {
+            var id = UUID.randomUUID().toString();
+
+            final var taskNotFoundException =
+                    assertThrows(StatusRuntimeException.class, () -> stub.start(buildStartTaskRequest(id)));
+
+            reporter.publishEntry("Error message: " + taskNotFoundException.getMessage());
+            assertTrue(taskNotFoundException.getMessage().contains(id));
+        }
     }
 }

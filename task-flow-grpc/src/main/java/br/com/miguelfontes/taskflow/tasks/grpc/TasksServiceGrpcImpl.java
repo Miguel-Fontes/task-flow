@@ -7,6 +7,8 @@ import br.com.miguelfontes.taskflow.ports.tasks.CreateTaskResponse;
 import br.com.miguelfontes.taskflow.ports.tasks.DeleteTaskRequest;
 import br.com.miguelfontes.taskflow.ports.tasks.SearchTasksRequest;
 import br.com.miguelfontes.taskflow.ports.tasks.SearchTasksResponse;
+import br.com.miguelfontes.taskflow.ports.tasks.StartTaskRequest;
+import br.com.miguelfontes.taskflow.ports.tasks.StartTaskResponse;
 import br.com.miguelfontes.taskflow.ports.tasks.TaskDTO;
 import br.com.miguelfontes.taskflow.ports.tasks.TaskNotFoundException;
 import br.com.miguelfontes.taskflow.ports.tasks.TasksAPI;
@@ -177,9 +179,39 @@ public class TasksServiceGrpcImpl extends TasksServiceGrpc.TasksServiceImplBase 
         }
     }
 
-    private TasksServiceOuterClass.ConcludeTaskResponse buildConcludeTaskResponse(TasksServiceOuterClass.Task concludeTaskResponse) {
+    private TasksServiceOuterClass.ConcludeTaskResponse buildConcludeTaskResponse(TasksServiceOuterClass.Task task) {
         return TasksServiceOuterClass.ConcludeTaskResponse.newBuilder()
-                .setTask(concludeTaskResponse)
+                .setTask(task)
+                .build();
+    }
+
+    @Override
+    public void start(TasksServiceOuterClass.StartTaskRequest request, StreamObserver<TasksServiceOuterClass.StartTaskResponse> responseObserver) {
+        try {
+            var response = Optional.of(request)
+                    .map(TasksServiceOuterClass.StartTaskRequest::getId)
+                    .map(UUID::fromString)
+                    .map(StartTaskRequest::of)
+                    .map(api::execute)
+                    .map(StartTaskResponse::getTask)
+                    .map(this::toOuterTask)
+                    .map(this::buildStartTaskResponse)
+                    .orElseThrow();
+
+            responseObserver.onNext(response);
+            responseObserver.onCompleted();
+
+        } catch (TaskNotFoundException e) {
+            responseObserver.onError(Status.NOT_FOUND
+                    .withDescription(e.getMessage())
+                    .withCause(e)
+                    .asRuntimeException());
+        }
+    }
+
+    private TasksServiceOuterClass.StartTaskResponse buildStartTaskResponse(TasksServiceOuterClass.Task task) {
+        return TasksServiceOuterClass.StartTaskResponse.newBuilder()
+                .setTask(task)
                 .build();
     }
 }
