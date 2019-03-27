@@ -72,6 +72,15 @@ public final class Task {
     }
 
     /**
+     * Sets a Task as Doing.
+     *
+     * @return a new instance of Task, with it's status as Doing
+     */
+    public Task start() {
+        return new Task(id, title, description, createdAt, LocalDateTime.now(), TaskStatus.DOING, author);
+    }
+
+    /**
      * Marks a Task as Done.
      *
      * @return a new instance of Task, with it's status as Done
@@ -108,7 +117,4 @@ public final class Task {
         return description;
     }
 
-    public Task start() {
-        return new Task(id, title, description, createdAt, LocalDateTime.now(), TaskStatus.DOING, author);
-    }
 }

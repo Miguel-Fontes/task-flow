@@ -168,5 +168,16 @@ class TaskTest {
                     () -> assertNotEquals(task.getUpdatedAt(), concludedTask.getUpdatedAt())
             );
         }
+
+        @Test
+        @DisplayName("should set a task as doing")
+        void shouldSetATaskAsDoing() {
+            var startedTask = task.start();
+
+            assertAll(
+                    () -> assertEquals(TaskStatus.DOING, startedTask.getStatus()),
+                    () -> assertNotEquals(task.getUpdatedAt(), startedTask.getUpdatedAt())
+            );
+        }
     }
 }
