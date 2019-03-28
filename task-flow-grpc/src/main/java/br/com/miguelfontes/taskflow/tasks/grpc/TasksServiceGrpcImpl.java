@@ -21,8 +21,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.Collection;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
+import java.util.function.UnaryOperator;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -49,16 +49,20 @@ public class TasksServiceGrpcImpl extends TasksServiceGrpc.TasksServiceImplBase 
 
     @Override
     public void create(TasksServiceOuterClass.CreateTaskRequest request, StreamObserver<TasksServiceOuterClass.CreateTaskResponse> responseObserver) {
-        var response = Optional.of(request)
-                .map(this::buildCreateTaskRequest)
-                .map(api::execute)
-                .map(CreateTaskResponse::getTask)
-                .map(this::toOuterTask)
-                .map(this::buildTaskResponse)
-                .orElseThrow();
+        var response = identity(TasksServiceOuterClass.CreateTaskRequest.class)
+                .andThen(this::buildCreateTaskRequest)
+                .andThen(api::execute)
+                .andThen(CreateTaskResponse::getTask)
+                .andThen(this::toOuterTask)
+                .andThen(this::buildTaskResponse)
+                .apply(request);
 
         responseObserver.onNext(response);
         responseObserver.onCompleted();
+    }
+
+    private <T> UnaryOperator<T> identity(Class<T> t) {
+        return t::cast;
     }
 
     private CreateTaskRequest buildCreateTaskRequest(TasksServiceOuterClass.CreateTaskRequest req) {
@@ -126,13 +130,13 @@ public class TasksServiceGrpcImpl extends TasksServiceGrpc.TasksServiceImplBase 
 
     @Override
     public void update(TasksServiceOuterClass.UpdateTaskRequest request, StreamObserver<TasksServiceOuterClass.UpdateTaskResponse> responseObserver) {
-        var response = Optional.of(request)
-                .map(this::buildUpdateTaskRequest)
-                .map(api::execute)
-                .map(UpdateTaskResponse::getTask)
-                .map(this::toOuterTask)
-                .map(this::buildUpdateTaskResponse)
-                .orElse(TasksServiceOuterClass.UpdateTaskResponse.newBuilder().build());
+        var response = identity(TasksServiceOuterClass.UpdateTaskRequest.class)
+                .andThen(this::buildUpdateTaskRequest)
+                .andThen(api::execute)
+                .andThen(UpdateTaskResponse::getTask)
+                .andThen(this::toOuterTask)
+                .andThen(this::buildUpdateTaskResponse)
+                .apply(request);
 
         responseObserver.onNext(response);
         responseObserver.onCompleted();
@@ -158,15 +162,15 @@ public class TasksServiceGrpcImpl extends TasksServiceGrpc.TasksServiceImplBase 
     @Override
     public void conclude(TasksServiceOuterClass.ConcludeTaskRequest request, StreamObserver<TasksServiceOuterClass.ConcludeTaskResponse> responseObserver) {
         try {
-            var response = Optional.of(request)
-                    .map(TasksServiceOuterClass.ConcludeTaskRequest::getId)
-                    .map(UUID::fromString)
-                    .map(ConcludeTaskRequest::of)
-                    .map(api::execute)
-                    .map(ConcludeTaskResponse::getTask)
-                    .map(this::toOuterTask)
-                    .map(this::buildConcludeTaskResponse)
-                    .orElseThrow();
+            final var response = identity(TasksServiceOuterClass.ConcludeTaskRequest.class)
+                    .andThen(TasksServiceOuterClass.ConcludeTaskRequest::getId)
+                    .andThen(UUID::fromString)
+                    .andThen(ConcludeTaskRequest::of)
+                    .andThen(api::execute)
+                    .andThen(ConcludeTaskResponse::getTask)
+                    .andThen(this::toOuterTask)
+                    .andThen(this::buildConcludeTaskResponse)
+                    .apply(request);
 
             responseObserver.onNext(response);
             responseObserver.onCompleted();
@@ -188,15 +192,15 @@ public class TasksServiceGrpcImpl extends TasksServiceGrpc.TasksServiceImplBase 
     @Override
     public void start(TasksServiceOuterClass.StartTaskRequest request, StreamObserver<TasksServiceOuterClass.StartTaskResponse> responseObserver) {
         try {
-            var response = Optional.of(request)
-                    .map(TasksServiceOuterClass.StartTaskRequest::getId)
-                    .map(UUID::fromString)
-                    .map(StartTaskRequest::of)
-                    .map(api::execute)
-                    .map(StartTaskResponse::getTask)
-                    .map(this::toOuterTask)
-                    .map(this::buildStartTaskResponse)
-                    .orElseThrow();
+            var response = identity(TasksServiceOuterClass.StartTaskRequest.class)
+                    .andThen(TasksServiceOuterClass.StartTaskRequest::getId)
+                    .andThen(UUID::fromString)
+                    .andThen(StartTaskRequest::of)
+                    .andThen(api::execute)
+                    .andThen(StartTaskResponse::getTask)
+                    .andThen(this::toOuterTask)
+                    .andThen(this::buildStartTaskResponse)
+                    .apply(request);
 
             responseObserver.onNext(response);
             responseObserver.onCompleted();
