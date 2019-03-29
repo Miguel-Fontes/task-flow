@@ -5,9 +5,11 @@ import br.com.miguelfontes.taskflow.persistence.mmdb.TaskRepositoryMMDB;
 import br.com.miguelfontes.taskflow.ports.persistence.TaskRepository;
 import br.com.miguelfontes.taskflow.ports.tasks.ConcludeTaskRequest;
 import br.com.miguelfontes.taskflow.ports.tasks.CreateTaskRequest;
+import br.com.miguelfontes.taskflow.ports.tasks.TaskDTO;
 import br.com.miguelfontes.taskflow.ports.tasks.TaskNotFoundException;
 import br.com.miguelfontes.taskflow.ports.tasks.TasksAPI;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestReporter;
 
@@ -23,17 +25,36 @@ class ConcludeTaskTest {
     private final TaskRepository repository = TaskRepositoryMMDB.instance();
     private final TasksAPI service = TasksService.instance(repository);
 
-    @Test
-    @DisplayName("should conclude a Task")
-    void shouldConcludeATask() {
-        final var task = service.execute(CreateTaskRequest.of(USER_ID, TASK_TITLE)).getTask();
+    @Nested
+    @DisplayName("when successful")
+    class WhenSuccessful {
+        TaskDTO task = service.execute(CreateTaskRequest.of(USER_ID, TASK_TITLE)).getTask();
+        TaskDTO concludedTask = service.execute(ConcludeTaskRequest.of(task.getId())).getTask();
 
-        final var concludedTask = service.execute(ConcludeTaskRequest.of(task.getId())).getTask();
+        @Test
+        @DisplayName("should conclude a Task")
+        void shouldConcludeATask() {
+            assertEquals(TaskStatus.DONE.toString(), concludedTask.getStatus());
+        }
 
-        assertAll(
-                () -> assertNotEquals(task.getUpdatedAt(), concludedTask.getUpdatedAt()),
-                () -> assertEquals(TaskStatus.DONE.toString(), concludedTask.getStatus())
-        );
+        @Test
+        @DisplayName("should update the updated at task attribute")
+        void shouldUpdateTheUpdatedAtTaskAttribute() {
+            assertTrue(task.getUpdatedAt().isBefore(concludedTask.getUpdatedAt()),
+                    String.format("The original task updated at [%s] is not before the updated one [%s]!", task.getUpdatedAt().toString(), concludedTask.getUpdatedAt().toString()));
+        }
+
+        @Test
+        @DisplayName("should not change other attributes")
+        void shouldNotChangeOtherAttributes() {
+            assertAll(
+                    () -> assertEquals(task.getTitle(), concludedTask.getTitle()),
+                    () -> assertEquals(task.getDescription(), concludedTask.getDescription()),
+                    () -> assertEquals(task.getCreatedAt(), concludedTask.getCreatedAt()),
+                    () -> assertEquals(task.getAuthor(), concludedTask.getAuthor())
+            );
+
+        }
     }
 
     @Test

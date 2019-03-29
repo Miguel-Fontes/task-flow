@@ -84,7 +84,7 @@ class TasksServiceGrpcImplTest extends GrpcTest {
     }
 
     @Test
-    @DisplayName("shouldRetrieveAllTasks")
+    @DisplayName("should retrieve all tasks")
     void shouldRetrieveAllTasks() {
         stub.create(buildCreateTaskRequest(USER_ID, TASK_TITLE));
 
