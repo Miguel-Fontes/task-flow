@@ -65,26 +65,19 @@ class UpdateTaskTest {
         @Test
         @DisplayName("should update task updatedAt field")
         void shouldUpdateTaskUpdatedAtAttribute() {
-            assertNotEquals(task.getUpdatedAt(), updatedTask.getUpdatedAt());
+            assertTrue(task.getUpdatedAt().isBefore(updatedTask.getUpdatedAt()),
+                    String.format("The original task updated at [%s] is not before the updated one [%s]!", task.getUpdatedAt().toString(), updatedTask.getUpdatedAt().toString()));
         }
 
         @Test
-        @DisplayName("should not change task status")
-        void shouldNotChangeTaskStatus() {
-            assertEquals(task.getStatus().toString(), updatedTask.getStatus());
-        }
-
-        @Test
-        @DisplayName("should not change task author")
-        void shouldNotChangeTaskAuthor() {
-            assertEquals(task.getAuthor().getId(), updatedTask.getAuthor());
-        }
-
-        @Test
-        @DisplayName("should not change task id")
-        void shouldNotChangeTaskId() {
-            assertEquals(task.getId(), updatedTask.getId());
+        @DisplayName("should not change other attributes")
+        void shouldNotChangeOtherAttributes() {
+            assertAll(
+                    () -> assertEquals(task.getStatus().toString(), updatedTask.getStatus()),
+                    () -> assertEquals(task.getAuthor().getId(), updatedTask.getAuthor()),
+                    () -> assertEquals(task.getCreatedAt(), updatedTask.getCreatedAt()),
+                    () -> assertEquals(task.getId(), updatedTask.getId())
+            );
         }
     }
-
 }
