@@ -5,7 +5,7 @@ package br.com.miguelfontes.taskflow.ports.tasks;
  *
  * @author Miguel Fontes
  */
-public interface ConcludeTask {
+interface ConcludeTask {
 
     /**
      * Defines the status of a given Task as Done.

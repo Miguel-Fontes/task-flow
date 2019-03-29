@@ -6,6 +6,6 @@ package br.com.miguelfontes.taskflow.ports.tasks;
  *
  * @author Miguel Fontes
  */
-public interface CreateUser {
+interface CreateUser {
     CreateUserResponse execute(CreateUserRequest request);
 }
