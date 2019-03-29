@@ -1,7 +1,7 @@
 package br.com.miguelfontes.taskflow.tasks;
 
 import br.com.miguelfontes.taskflow.ports.persistence.TaskRepository;
-import br.com.miguelfontes.taskflow.ports.tasks.CreateTaskRequest;
+import br.com.miguelfontes.taskflow.ports.tasks.TaskNotFoundException;
 import br.com.miguelfontes.taskflow.ports.tasks.UpdateTaskRequest;
 import br.com.miguelfontes.taskflow.ports.tasks.UpdateTaskResponse;
 import br.com.miguelfontes.taskflow.tasks.factories.TaskDTOFactory;
@@ -29,13 +29,7 @@ class UpdateTaskUseCase {
                 .map(repository::save)
                 .map(TaskDTOFactory::from)
                 .map(UpdateTaskResponse::of)
-                .orElseGet(() -> createTask(request));
+                .orElseThrow(() -> new TaskNotFoundException(request.getId()));
     }
 
-    private UpdateTaskResponse createTask(UpdateTaskRequest request) {
-        var createTaskRequest = CreateTaskRequest.of(request.getAuthor(), request.getTitle());
-        var response = CreateTaskUseCase.instance(repository).execute(createTaskRequest);
-
-        return UpdateTaskResponse.of(response.getTask());
-    }
 }

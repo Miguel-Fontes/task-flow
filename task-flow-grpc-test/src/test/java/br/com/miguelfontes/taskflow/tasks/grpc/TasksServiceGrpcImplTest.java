@@ -148,9 +148,7 @@ class TasksServiceGrpcImplTest extends GrpcTest {
         return TasksServiceOuterClass.UpdateTaskRequest.newBuilder()
                 .setId(task.getId())
                 .setTitle(task.getId())
-                .setDescription(task.getDescription())
-                .setStatus(task.getStatus())
-                .setAuthor(task.getAuthor());
+                .setDescription(task.getDescription());
     }
 
     @Nested

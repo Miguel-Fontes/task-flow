@@ -147,9 +147,7 @@ public class TasksServiceGrpcImpl extends TasksServiceGrpc.TasksServiceImplBase 
         return UpdateTaskRequest.of(
                 UUID.fromString(request.getId()),
                 request.getTitle(),
-                request.getDescription(),
-                request.getStatus(),
-                UUID.fromString(request.getAuthor())
+                request.getDescription()
         );
     }
 
