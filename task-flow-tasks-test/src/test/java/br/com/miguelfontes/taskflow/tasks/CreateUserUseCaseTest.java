@@ -1,6 +1,5 @@
 package br.com.miguelfontes.taskflow.tasks;
 
-import br.com.miguelfontes.taskflow.ports.tasks.CreateUser;
 import br.com.miguelfontes.taskflow.ports.tasks.CreateUserRequest;
 import br.com.miguelfontes.taskflow.ports.tasks.UserDTO;
 import org.junit.jupiter.api.DisplayName;
@@ -13,7 +12,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @DisplayName("create user")
 class CreateUserUseCaseTest {
 
-    private CreateUser useCase = CreateUserUseCase.instance();
+    private CreateUserUseCase useCase = CreateUserUseCase.instance();
     private static final String USER_NAME = "a user's name";
 
     @Test

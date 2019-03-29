@@ -5,6 +5,6 @@ package br.com.miguelfontes.taskflow.ports.tasks;
  *
  * @author Miguel Fontes
  */
-public interface UpdateTask {
+interface UpdateTask {
     UpdateTaskResponse execute(UpdateTaskRequest request);
 }
