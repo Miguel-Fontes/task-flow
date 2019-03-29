@@ -35,4 +35,8 @@
     <orderEntry type="library" name="Maven: org.springframework:spring-aop:5.1.4.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-expression:5.1.4.RELEASE" level="project" />
   </component>
+  <component name="SonarLintModuleSettings">
+    <option name="idePathPrefix" value="task-flow-tasks-test" />
+    <option name="sqPathPrefix" value="task-flow-tasks" />
+  </component>
 </module>
