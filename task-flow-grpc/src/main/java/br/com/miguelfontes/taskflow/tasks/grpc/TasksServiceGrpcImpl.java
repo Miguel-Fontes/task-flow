@@ -22,7 +22,7 @@ import org.springframework.stereotype.Service;
 import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
-import java.util.function.UnaryOperator;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -49,8 +49,7 @@ public class TasksServiceGrpcImpl extends TasksServiceGrpc.TasksServiceImplBase 
 
     @Override
     public void create(TasksServiceOuterClass.CreateTaskRequest request, StreamObserver<TasksServiceOuterClass.CreateTaskResponse> responseObserver) {
-        var response = identity(TasksServiceOuterClass.CreateTaskRequest.class)
-                .andThen(this::buildCreateTaskRequest)
+        var response = buildCreateTaskRequest()
                 .andThen(api::execute)
                 .andThen(CreateTaskResponse::getTask)
                 .andThen(this::toOuterTask)
@@ -61,12 +60,8 @@ public class TasksServiceGrpcImpl extends TasksServiceGrpc.TasksServiceImplBase 
         responseObserver.onCompleted();
     }
 
-    private <T> UnaryOperator<T> identity(Class<T> t) {
-        return t::cast;
-    }
-
-    private CreateTaskRequest buildCreateTaskRequest(TasksServiceOuterClass.CreateTaskRequest req) {
-        return CreateTaskRequest.of(UUID.fromString(req.getUserId()), req.getTitle());
+    private Function<TasksServiceOuterClass.CreateTaskRequest, CreateTaskRequest> buildCreateTaskRequest() {
+        return request -> CreateTaskRequest.of(UUID.fromString(request.getUserId()), request.getTitle());
     }
 
     private TasksServiceOuterClass.Task toOuterTask(TaskDTO task) {
@@ -130,8 +125,7 @@ public class TasksServiceGrpcImpl extends TasksServiceGrpc.TasksServiceImplBase 
 
     @Override
     public void update(TasksServiceOuterClass.UpdateTaskRequest request, StreamObserver<TasksServiceOuterClass.UpdateTaskResponse> responseObserver) {
-        var response = identity(TasksServiceOuterClass.UpdateTaskRequest.class)
-                .andThen(this::buildUpdateTaskRequest)
+        var response = buildUpdateTaskRequest()
                 .andThen(api::execute)
                 .andThen(UpdateTaskResponse::getTask)
                 .andThen(this::toOuterTask)
@@ -143,8 +137,8 @@ public class TasksServiceGrpcImpl extends TasksServiceGrpc.TasksServiceImplBase 
     }
 
 
-    private UpdateTaskRequest buildUpdateTaskRequest(TasksServiceOuterClass.UpdateTaskRequest request) {
-        return UpdateTaskRequest.of(
+    private Function<TasksServiceOuterClass.UpdateTaskRequest, UpdateTaskRequest> buildUpdateTaskRequest() {
+        return request -> UpdateTaskRequest.of(
                 UUID.fromString(request.getId()),
                 request.getTitle(),
                 request.getDescription()
@@ -160,10 +154,7 @@ public class TasksServiceGrpcImpl extends TasksServiceGrpc.TasksServiceImplBase 
     @Override
     public void conclude(TasksServiceOuterClass.ConcludeTaskRequest request, StreamObserver<TasksServiceOuterClass.ConcludeTaskResponse> responseObserver) {
         try {
-            final var response = identity(TasksServiceOuterClass.ConcludeTaskRequest.class)
-                    .andThen(TasksServiceOuterClass.ConcludeTaskRequest::getId)
-                    .andThen(UUID::fromString)
-                    .andThen(ConcludeTaskRequest::of)
+            final var response = buildConcludeTaskRequest()
                     .andThen(api::execute)
                     .andThen(ConcludeTaskResponse::getTask)
                     .andThen(this::toOuterTask)
@@ -181,6 +172,10 @@ public class TasksServiceGrpcImpl extends TasksServiceGrpc.TasksServiceImplBase 
         }
     }
 
+    private Function<TasksServiceOuterClass.ConcludeTaskRequest, ConcludeTaskRequest> buildConcludeTaskRequest() {
+        return request -> ConcludeTaskRequest.of(UUID.fromString(request.getId()));
+    }
+
     private TasksServiceOuterClass.ConcludeTaskResponse buildConcludeTaskResponse(TasksServiceOuterClass.Task task) {
         return TasksServiceOuterClass.ConcludeTaskResponse.newBuilder()
                 .setTask(task)
@@ -190,10 +185,7 @@ public class TasksServiceGrpcImpl extends TasksServiceGrpc.TasksServiceImplBase 
     @Override
     public void start(TasksServiceOuterClass.StartTaskRequest request, StreamObserver<TasksServiceOuterClass.StartTaskResponse> responseObserver) {
         try {
-            var response = identity(TasksServiceOuterClass.StartTaskRequest.class)
-                    .andThen(TasksServiceOuterClass.StartTaskRequest::getId)
-                    .andThen(UUID::fromString)
-                    .andThen(StartTaskRequest::of)
+            var response = buildStartTaskRequest()
                     .andThen(api::execute)
                     .andThen(StartTaskResponse::getTask)
                     .andThen(this::toOuterTask)
@@ -209,6 +201,10 @@ public class TasksServiceGrpcImpl extends TasksServiceGrpc.TasksServiceImplBase 
                     .withCause(e)
                     .asRuntimeException());
         }
+    }
+
+    private Function<TasksServiceOuterClass.StartTaskRequest, StartTaskRequest> buildStartTaskRequest() {
+        return request -> StartTaskRequest.of(UUID.fromString(request.getId()));
     }
 
     private TasksServiceOuterClass.StartTaskResponse buildStartTaskResponse(TasksServiceOuterClass.Task task) {
