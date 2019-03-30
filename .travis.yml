@@ -22,7 +22,7 @@ cache:
   - $HOME/.m2
 
 after_success:
-- mvn sonar:sonar -Dsonar.projectKey=Miguel-Fontes_task-flow -Dsonar.organization=$SONARQUBE_ORGANIZATION -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=$SONARQUBE_TOKEN
+  - mvn sonar:sonar -Dsonar.projectKey=Miguel-Fontes_task-flow -Dsonar.organization=$SONARQUBE_ORGANIZATION -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=$SONARQUBE_TOKEN -Dsonar.branch.name=$TRAVIS_BRANCH
 
 deploy:
 - provider: releases
