@@ -5,6 +5,6 @@ package br.com.miguelfontes.taskflow.ports.tasks;
  *
  * @author Miguel Fontes
  */
-interface SearchTasks {
+public interface SearchTasks {
     SearchTasksResponse execute(SearchTasksRequest request);
 }

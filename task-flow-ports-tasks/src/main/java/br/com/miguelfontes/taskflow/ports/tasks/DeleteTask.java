@@ -5,6 +5,6 @@ package br.com.miguelfontes.taskflow.ports.tasks;
  *
  * @author Miguel Fontes
  */
-interface DeleteTask {
+public interface DeleteTask {
     void execute(DeleteTaskRequest request);
 }

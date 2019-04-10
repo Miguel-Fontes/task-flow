@@ -5,6 +5,6 @@ package br.com.miguelfontes.taskflow.ports.tasks;
  *
  * @author Miguel Fontes
  */
-interface StartTask {
+public interface StartTask {
     StartTaskResponse execute(StartTaskRequest request);
 }
